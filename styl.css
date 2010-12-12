@@ -12,9 +12,11 @@ font-size: 16pt;
 
 div#mapa_svg
 {
-height: 1000px;
-width: 1000px;
-margin: auto;
+height: 660px;
+width: 680px;
+margin: 10px auto;
+padding: 5px;
+border: 1px solid #000;
 }
 
 div#mapa_svg p
