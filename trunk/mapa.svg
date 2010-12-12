@@ -3,5 +3,17 @@
 		baseProfile="full"
 		xmlns="http://www.w3.org/2000/svg"
 		xmlns:xlink="http://www.w3.org/1999/xlink"
-		xmlns:ev="http://www.w3.org/2001/xml-events">
+		xmlns:ev="http://www.w3.org/2001/xml-events"
+		>
+	<polygon 
+		fill="#FFFFFF"
+		stroke="#555555"
+		stroke-width="1px" 
+		points="
+				9.34,102.16
+				50.39,443.73
+				605.27,651.77
+				648.22,99.27
+				598.39,53.6
+				"/>
 </svg>
