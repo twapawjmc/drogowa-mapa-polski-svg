@@ -16,12 +16,21 @@
 		<input id="szerokosc" type="text" value=""  /><span class="info"></span><br />
 		<label for="dlugosc">Długość Geograficzna<dfn>np. 14°12'2.52"E</dfn></label>
 		<input id="dlugosc" type="text" value=""  /><span class="info"></span><br />
+		<input id="przelicz" type="button" value="Przelicz!" />
 		</fieldset>
 		
-		<input id="przelicz" type="button" value="Przelicz!" />
+		<fieldset id="wsp_koordynaty">
+		<legend>Podaj koordynaty</legend>
+		<label for="koordynaty">Koordynaty<dfn>np. 14.82271437130367,50.87081987854344,0</dfn></label>
+		<textarea id="koordynaty"></textarea>
+		<input id="przeliczk" type="button" value="Przelicz!" />
+		</fieldset>
+
 		<script type="text/javascript">
 		var przelicz = document.getElementById('przelicz');
 		przelicz.addEventListener('click',oblicz,false);
+		var przeliczk = document.getElementById('przeliczk');
+		przeliczk.addEventListener('click',oblicz,false);
 		</script>
 		
 		<fieldset id="wsp_liczba">
