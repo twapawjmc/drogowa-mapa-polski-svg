@@ -40,7 +40,7 @@ z-index: 26;
 fieldset > label:hover > dfn {
 display: block;
 }
-fieldset input {
+fieldset input, fieldset textarea  {
 display: inline-block;
 width: 250px ;
 margin: 5px 0;
@@ -49,7 +49,7 @@ border: 1px solid transparent;
 padding: 1px ;
 background: #abcdef;
 }
-fieldset input:hover {
+fieldset input:hover, fieldset textarea:hover {
 background-color: #efe;
 }
 input[type=button]{

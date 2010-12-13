@@ -6,50 +6,84 @@ function oblicz()
 	var x = 969; //max zachód w sekundach ["]
 	var y = 6126; //max północ w sekundach ["]
 	
-	//grX = 0.01910279079487745; //dla 52°N
-	//grY = 0.031028075591010305;
-	var sz1 = document.getElementById('szerokosc');
-	var dl1 = document.getElementById('dlugosc');
-	var sz2 = document.getElementById('szerokosc2');
-	var dl2 = document.getElementById('dlugosc2');
-	var sz = sz1.value;
-	var dl = dl1.value;
-	var wzor = /^\s*([0-9]{1,3})\°\s*(?:([0-9]{1,2})\'\s*)?(?:([0-9]{0,2}(?:\.\s*[0-9]{1,2})?)[\″\"]{1}\s*)?([SNEW])?\s*$/;
-	if(!sz.match(/^\s*[0-9]{1,2}\°\s*([0-9]{1,2}\'\s*)?([0-9]{0,2}(\.\s*[0-9]{1,2})?[\″\"]{1}\s*)?[SN]?\s*$/)) sz = "BŁĄD";
-	else
+	if(this.id == "przelicz")
 		{
-		var szer = wzor.exec(sz);
-		for(i=1;i<szer.length;++i)
+		//grX = 0.01910279079487745; //dla 52°N
+		//grY = 0.031028075591010305;
+		var sz1 = document.getElementById('szerokosc');
+		var dl1 = document.getElementById('dlugosc');
+		var sz2 = document.getElementById('szerokosc2');
+		var dl2 = document.getElementById('dlugosc2');
+		var sz = sz1.value;
+		var dl = dl1.value;
+		var wzor = /^\s*([0-9]{1,3})\°\s*(?:([0-9]{1,2})\'\s*)?(?:([0-9]{0,2}(?:\.\s*[0-9]{1,2})?)[\″\"]{1}\s*)?([SNEW])?\s*$/;
+		if(!sz.match(/^\s*[0-9]{1,2}\°\s*([0-9]{1,2}\'\s*)?([0-9]{0,2}(\.\s*[0-9]{1,2})?[\″\"]{1}\s*)?[SN]?\s*$/)) sz = "BŁĄD";
+		else
 			{
-			szer[i]=Number(szer[i]); //konwersja ze stringa na liczbę
-			if(debug) wyniki.innerHTML = wyniki.innerHTML + "szer[" + i + "] = " + szer[i] + '</br >';
+			var szer = wzor.exec(sz);
+			for(i=1;i<szer.length;++i)
+				{
+				szer[i]=Number(szer[i]); //konwersja ze stringa na liczbę
+				if(debug) wyniki.innerHTML = wyniki.innerHTML + "szer[" + i + "] = " + szer[i] + '</br >';
+				}
+			
+			sz = ((szer[1]*60)+((!isNaN(szer[2]))?(szer[2]):0))*60+((!isNaN(szer[3]))?(szer[3]):0);
+			if(debug) wyniki.innerHTML = wyniki.innerHTML + "sz niezaokrąglona = " + sz + '</br >';
+			//sz = Round(sz,2);
+			if(debug) wyniki.innerHTML = wyniki.innerHTML + "sz zaokrąglona = " + sz + '</br >';
+			}
+		if(!dl.match(/^\s*[0-9]{1,3}\°\s*([0-9]{1,2}\'\s*)?([0-9]{0,2}(\.\s*[0-9]{1,2})?[\″\"]{1}\s*)?[EW]?\s*$/)) dl = "BŁĄD";
+		else
+			{
+			var dlug = wzor.exec(dl);
+			for(i=1;i<dlug.length;++i) 	
+				{
+				dlug[i]=Number(dlug[i]); //konwersja ze stringa na liczbę
+				if(debug) wyniki.innerHTML = wyniki.innerHTML + "dlug[" + i + "] = " + dlug[i] + '</br >';
+				}
+			dl = ((dlug[1]*60)+((!isNaN(dlug[2]))?(dlug[2]):0))*60+((!isNaN(dlug[3]))?(dlug[3]):0);
+			if(debug) wyniki.innerHTML = wyniki.innerHTML + "dl niezaokrąglona = " + dl + '</br >';
+			//dl = Round(dl,2);
+			if(debug) wyniki.innerHTML = wyniki.innerHTML + "dl zaokrąglona = " + dl + '</br >';
+			}
+		var xy = st2xy(dl,sz);
+		sz2.value = Round(xy.y,2);
+		dl2.value = Round(xy.x,2);
+		var dlugosc = Round((xy.x-x),2);
+		var szerokosc= Round((y-xy.y),2);
+		if(!debug) wyniki.innerHTML = wyniki.innerHTML + dlugosc +','+ szerokosc +" ";
+		}
+	if(this.id == "przeliczk")
+		{
+		var k = document.getElementById('koordynaty');
+		var sz2 = document.getElementById('szerokosc2');
+		var dl2 = document.getElementById('dlugosc2');
+		var z = k.value;
+		var wzor = /^\s*([0-9.]+)\,([0-9.]+)\,([0-9.]+)(.*)$/;
+		var a = new Array();
+		for(i=0;;++i)
+			{
+			if(debug) wyniki.innerHTML = wyniki.innerHTML + 'z= ' + z + '</br >';
+			var koor = wzor.exec(z);
+			if(koor == null)
+				{
+				break;
+				}
+			koor[1] = Number(koor[1]);
+			koor[2] = Number(koor[2]);
+			var dl = koor[1]*3600;
+			var sz = koor[2]*3600;
+			var xy = st2xy(dl,sz);
+			sz2.value = Round(xy.y,2);
+			dl2.value = Round(xy.x,2);
+			var dlugosc = Round((xy.x-x),2);
+			var szerokosc = Round((y-xy.y),2);
+			if(!debug) wyniki.innerHTML = wyniki.innerHTML + dlugosc +','+ szerokosc +" ";
+			//wyniki.innerHTML = koor[1];
+			z = koor[4];
 			}
 		
-		sz = ((szer[1]*60)+((!isNaN(szer[2]))?(szer[2]):0))*60+((!isNaN(szer[3]))?(szer[3]):0);
-		if(debug) wyniki.innerHTML = wyniki.innerHTML + "sz niezaokrąglona = " + sz + '</br >';
-		//sz = Round(sz,2);
-		if(debug) wyniki.innerHTML = wyniki.innerHTML + "sz zaokrąglona = " + sz + '</br >';
 		}
-	if(!dl.match(/^\s*[0-9]{1,3}\°\s*([0-9]{1,2}\'\s*)?([0-9]{0,2}(\.\s*[0-9]{1,2})?[\″\"]{1}\s*)?[EW]?\s*$/)) dl = "BŁĄD";
-	else
-		{
-		var dlug = wzor.exec(dl);
-		for(i=1;i<dlug.length;++i) 	
-			{
-			dlug[i]=Number(dlug[i]); //konwersja ze stringa na liczbę
-			if(debug) wyniki.innerHTML = wyniki.innerHTML + "dlug[" + i + "] = " + dlug[i] + '</br >';
-			}
-		dl = ((dlug[1]*60)+((!isNaN(dlug[2]))?(dlug[2]):0))*60+((!isNaN(dlug[3]))?(dlug[3]):0);
-		if(debug) wyniki.innerHTML = wyniki.innerHTML + "dl niezaokrąglona = " + dl + '</br >';
-		//dl = Round(dl,2);
-		if(debug) wyniki.innerHTML = wyniki.innerHTML + "dl zaokrąglona = " + dl + '</br >';
-		}
-	var xy = st2xy(dl,sz);
-	sz2.value = Round(xy.y,2);
-	dl2.value = Round(xy.x,2);
-	var dlugosc = Round((xy.x-x),2);
-	var szerokosc= Round((y-xy.y),2);
-	if(!debug) wyniki.innerHTML = wyniki.innerHTML + dlugosc +','+ szerokosc +" ";
 	}
 	
 function Round(n, k) 
