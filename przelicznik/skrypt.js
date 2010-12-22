@@ -1,8 +1,6 @@
 function oblicz()
 	{
-	debug = 0;
 	var wyniki = document.getElementById('wyniki');
-	if(debug) wyniki.innerHTML = "";
 	var x = 969; //max zachód w sekundach ["]
 	var y = 6126; //max północ w sekundach ["]
 	
@@ -24,13 +22,8 @@ function oblicz()
 			for(i=1;i<szer.length;++i)
 				{
 				szer[i]=Number(szer[i]); //konwersja ze stringa na liczbę
-				if(debug) wyniki.innerHTML = wyniki.innerHTML + "szer[" + i + "] = " + szer[i] + '</br >';
 				}
-			
 			sz = ((szer[1]*60)+((!isNaN(szer[2]))?(szer[2]):0))*60+((!isNaN(szer[3]))?(szer[3]):0);
-			if(debug) wyniki.innerHTML = wyniki.innerHTML + "sz niezaokrąglona = " + sz + '</br >';
-			//sz = Round(sz,2);
-			if(debug) wyniki.innerHTML = wyniki.innerHTML + "sz zaokrąglona = " + sz + '</br >';
 			}
 		if(!dl.match(/^\s*[0-9]{1,3}\°\s*([0-9]{1,2}\'\s*)?([0-9]{0,2}(\.\s*[0-9]{1,2})?[\″\"]{1}\s*)?[EW]?\s*$/)) dl = "BŁĄD";
 		else
@@ -39,31 +32,26 @@ function oblicz()
 			for(i=1;i<dlug.length;++i) 	
 				{
 				dlug[i]=Number(dlug[i]); //konwersja ze stringa na liczbę
-				if(debug) wyniki.innerHTML = wyniki.innerHTML + "dlug[" + i + "] = " + dlug[i] + '</br >';
 				}
 			dl = ((dlug[1]*60)+((!isNaN(dlug[2]))?(dlug[2]):0))*60+((!isNaN(dlug[3]))?(dlug[3]):0);
-			if(debug) wyniki.innerHTML = wyniki.innerHTML + "dl niezaokrąglona = " + dl + '</br >';
-			//dl = Round(dl,2);
-			if(debug) wyniki.innerHTML = wyniki.innerHTML + "dl zaokrąglona = " + dl + '</br >';
 			}
 		var xy = st2xy(dl,sz);
-		sz2.value = Round(xy.y,2);
-		dl2.value = Round(xy.x,2);
-		var dlugosc = Round((xy.x-x),2);
-		var szerokosc= Round((y-xy.y),2);
-		if(!debug) wyniki.innerHTML = wyniki.innerHTML + dlugosc +','+ szerokosc +" ";
+		sz2.value = Round(xy.y,4);
+		dl2.value = Round(xy.x,4);
+		var dlugosc = Round((xy.x-x),4);
+		var szerokosc= Round((y-xy.y),4);
+		wyniki.innerHTML = wyniki.innerHTML + dlugosc +','+ szerokosc +" ";
 		}
-	if(this.id == "przeliczk")
+	if(this.id == "przeliczzge" || this.id == "przeliczdoge")
 		{
 		var k = document.getElementById('koordynaty');
 		var sz2 = document.getElementById('szerokosc2');
 		var dl2 = document.getElementById('dlugosc2');
 		var z = k.value;
-		var wzor = /^\s*([0-9.]+)\,([0-9.]+)\,([0-9.]+)(.*)$/;
-		var a = new Array();
+		if(this.id == "przeliczzge") var wzor = /^\s*([0-9.]+)\,([0-9.]+)\,([0-9.]+)(.*)$/;
+		if(this.id == "przeliczdoge") var wzor = /^\s*([0-9.]+)\,([0-9.]+)(.*)$/;
 		for(i=0;;++i)
 			{
-			if(debug) wyniki.innerHTML = wyniki.innerHTML + 'z= ' + z + '</br >';
 			var koor = wzor.exec(z);
 			if(koor == null)
 				{
@@ -71,16 +59,29 @@ function oblicz()
 				}
 			koor[1] = Number(koor[1]);
 			koor[2] = Number(koor[2]);
-			var dl = koor[1]*3600;
-			var sz = koor[2]*3600;
-			var xy = st2xy(dl,sz);
-			sz2.value = Round(xy.y,2);
-			dl2.value = Round(xy.x,2);
-			var dlugosc = Round((xy.x-x),2);
-			var szerokosc = Round((y-xy.y),2);
-			if(!debug) wyniki.innerHTML = wyniki.innerHTML + dlugosc +','+ szerokosc +" ";
-			//wyniki.innerHTML = koor[1];
-			z = koor[4];
+			
+			if(this.id == "przeliczzge") 
+				{
+				var dl = koor[1]*3600;
+				var sz = koor[2]*3600;
+				var xy = st2xy(dl,sz);
+				sz2.value = Round(xy.y,4);
+				dl2.value = Round(xy.x,4);
+				var dlugosc = Round((xy.x-x),4);
+				var szerokosc = Round((y-xy.y),4);
+				wyniki.innerHTML = wyniki.innerHTML + dlugosc +','+ szerokosc +" ";
+				z = koor[4];
+				}
+			if(this.id == "przeliczdoge")
+				{
+				var dl = koor[1]+x;
+				var sz = y-koor[2];
+				var st = xy2st(dl,sz);
+				var dl2 = Round(st.dl/3600,6);
+				var sz2 = Round(st.sz/3600,6);
+				wyniki.innerHTML = wyniki.innerHTML + dl2 +','+ sz2 +",0 ";
+				z = koor[3];
+				}
 			}
 		
 		}
@@ -95,28 +96,31 @@ function Round(n, k)
 
 
 
-function st2xy(dl,sz,r)
+function st2xy(dl,sz)
 {
-debug;
+var dl2 = dl;
+var sz2 = sz;
 var rz=6400;
 var wyniki = document.getElementById('wyniki');
 var xy = new Array();
-if(debug) wyniki.innerHTML = wyniki.innerHTML + "dl w sekundach = " + dl + '</br >';
 var dl = (dl/648000)*Math.PI; //dlugosc i szerokosc podane w sekundach zamienia na radiany
-if(debug) wyniki.innerHTML = wyniki.innerHTML + "dl w radianach = " + dl + '</br >';
-if(debug) wyniki.innerHTML = wyniki.innerHTML + "sz w sekundach = " + sz + '</br >';
 var sz = (sz/648000)*Math.PI;
-if(debug) wyniki.innerHTML = wyniki.innerHTML + "sz w radianach = " + sz + '</br >';
-//var r = rz * Math.cos(sz); //mapka się robi krzywa...
 var r = 3940.233442084213; //dla 52°N
-if(debug) wyniki.innerHTML = wyniki.innerHTML + "r = " + r + '</br >';
-var ObwX = 2*Math.PI*r;
-if(debug) wyniki.innerHTML = wyniki.innerHTML + "ObwX = " + ObwX + '</br >';
-var ObwY = 2*Math.PI*rz;
-if(debug) wyniki.innerHTML = wyniki.innerHTML + "ObwY = " + ObwY + '</br >';
-xy.x = (dl/(2*Math.PI))*ObwX;
-if(debug) wyniki.innerHTML = wyniki.innerHTML + "x = " + xy.x + '</br >';
-xy.y = (sz/(2*Math.PI))*ObwY;
-if(debug) wyniki.innerHTML = wyniki.innerHTML + "y = " + xy.y + '</br >';
+xy.x = dl*r;
+xy.y = sz*rz;
 return xy;
+}
+
+
+function xy2st(x,y)
+{
+var rz=6400;
+var wyniki = document.getElementById('wyniki');
+var st = new Array();
+var r = 3940.233442084213; //dla 52°N
+var dl = x/r;
+var sz = y/rz;
+st.dl = (dl*648000)/Math.PI; //dlugosc i szerokosc podane w sekundach zamienia na radiany
+st.sz = (sz*648000)/Math.PI;
+return st;
 }
