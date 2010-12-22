@@ -65,8 +65,6 @@ function oblicz()
 				var dl = koor[1]*3600;
 				var sz = koor[2]*3600;
 				var xy = st2xy(dl,sz);
-				sz2.value = Round(xy.y,4);
-				dl2.value = Round(xy.x,4);
 				var dlugosc = Round((xy.x-x),4);
 				var szerokosc = Round((y-xy.y),4);
 				wyniki.innerHTML = wyniki.innerHTML + dlugosc +','+ szerokosc +" ";
