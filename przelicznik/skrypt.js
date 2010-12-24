@@ -48,7 +48,7 @@ function oblicz()
 		var sz2 = document.getElementById('szerokosc2');
 		var dl2 = document.getElementById('dlugosc2');
 		var z = k.value;
-		if(this.id == "przeliczzge") var wzor = /^\s*([0-9.]+)\,([0-9.]+)\,([0-9.]+)(.*)$/;
+		if(this.id == "przeliczzge") var wzor = /^\s*([0-9.]+)\,([0-9.]+)(?:\,([0-9.]+))?(.*)$/;
 		if(this.id == "przeliczdoge") var wzor = /^\s*([0-9.]+)\,([0-9.]+)(.*)$/;
 		for(i=0;;++i)
 			{
