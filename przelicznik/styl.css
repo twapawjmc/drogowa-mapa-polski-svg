@@ -49,14 +49,19 @@ border: 1px solid transparent;
 padding: 1px ;
 background: #abcdef;
 }
+textarea {
+height: 130px;
+}
 fieldset input:hover, fieldset textarea:hover {
 background-color: #efe;
 }
 input[type=button]{
-width: 150px ;
+float: right;
+clear: both;
+width: 200px ;
 height: 30px ;
 font-weight: bold;
 font-size: 12pt;
 display: block;
-margin: 10px auto;
+margin: 10px;
 }

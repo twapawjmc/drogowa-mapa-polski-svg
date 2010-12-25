@@ -23,8 +23,9 @@
 		<legend>Podaj koordynaty</legend>
 		<label for="koordynaty">Koordynaty<dfn>np. 14.82271437130367,50.87081987854344,0</dfn></label>
 		<textarea id="koordynaty"></textarea>
-		<input id="przeliczzge" type="button" value="Przelicz z GE!" />
-		<input id="przeliczdoge" type="button" value="Przelicz do GE !"/>
+		<input id="przeliczzge" type="button" value="Przelicz z GE do mapy!" />
+		<input id="przeliczdoge" type="button" value="Przelicz z mapy do GE !"/>
+		<input id="przeliczzmp" type="button" value="Przelicz z *.mp do mapy !"/>
 		</fieldset>
 
 		<script type="text/javascript">
@@ -34,6 +35,8 @@
 		przeliczk.addEventListener('click',oblicz,false);
 		var przeliczk2 = document.getElementById('przeliczdoge');
 		przeliczk2.addEventListener('click',oblicz,false);
+		var przeliczk3 = document.getElementById('przeliczzmp');
+		przeliczk3.addEventListener('click',oblicz,false);
 		</script>
 		
 		<fieldset id="wsp_liczba">
