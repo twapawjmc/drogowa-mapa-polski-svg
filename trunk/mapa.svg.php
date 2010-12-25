@@ -3,9 +3,6 @@ header('Content-type: image/svg+xml;charset=utf-8');
 //header('Content-type: text/plain;charset=utf-8'); 
 require 'granice.php';
 
-
-
-
 ?>
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <svg	version="1.1"
@@ -108,27 +105,31 @@ function stworzWielokat($tt, $id)
 					break;
 					}
 				}
-			if(strcmp($pPkt,$ostPkt) == 0) break;
+			if(strcmp($pPkt,$ostPkt) == 0)
+				{
+				unset($p[0]);
+				break;
+				}
 			}
 		echo "\n"."\n";
 		}
 	$polygon .= implode(' ',$p).'"/>';
 	echo $polygon;
 	}
-	
-	function odwroc($a)
+
+function odwroc($a)
+	{
+	$b = array();
+	foreach($a as $x)
 		{
-		$b = array();
-		foreach($a as $x)
-			{
-			$y = array($x);
-			$b = array_merge($y, $b);
-			}
-		return $b;
+		$y = array($x);
+		$b = array_merge($y, $b);
 		}
-		
-	function czekaj()
-		{
-		for($i=0;$i<10000000;$i++);
-		}
+	return $b;
+	}
+
+function czekaj()
+	{
+	for($i=0;$i<10000000;$i++);
+	}
 ?>
