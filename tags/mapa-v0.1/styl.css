@@ -1,0 +1,52 @@
+*
+{
+margin: 0;
+padding: 0
+}
+
+body
+{
+display:table;
+padding: 2px;
+}
+
+div#lewaKolumna
+{
+display: table-cell;
+width: 300px;
+margin: 10px;
+vertical-align: top;
+}
+
+h1
+{
+margin: 5px auto;
+text-align: center;
+font-size: 16pt;
+}
+
+div#mapa_svg
+{
+vertical-align: top;
+display: table-cell;
+height: 655px;
+width: 700px;
+margin: 5px auto;
+padding: 5px;
+border: 1px solid #000;
+}
+
+div#mapa_svg object
+{
+height: 100%;
+width: 100%;
+}
+
+div#mapa_svg p
+{
+background: red;
+text-align: center;
+margin: 10px;
+padding: 10px;
+color: white;
+}
