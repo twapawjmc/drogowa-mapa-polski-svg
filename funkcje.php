@@ -137,19 +137,26 @@ function stworzWielokat($tt, $id)
 					break;
 					}
 				}
+			//sprawdzamy czy ostatni punkt wielokąta jest taki sam jak pierwszy
 			if(strcmp($pPkt,$ostPkt) == 0)
 				{
+				//jeśli tak to usuwamy jeden z nich(pierwszy)
 				unset($p[0]);
+				//skoro ostani punkt jest taki sam jak pierwszy to znaczy, że wielokąt jest już utworzony
 				break;
 				}
 			}
-		echo "\n"."\n";
+		if($dbg) echo "\n"."\n";
 		}
+	//dołączenie współrzędnych i zamknięcie tagu
 	$polygon .= implode(' ',$p).'"/>';
+	
+	//wydrukowanie wielokątu
 	echo $polygon;
 	}
 
 function odwrocTablice($a)
+	//funkcja odwraca kolejność tablicy
 	{
 	$b = array();
 	foreach($a as $x)
@@ -161,6 +168,7 @@ function odwrocTablice($a)
 	}
 
 function czekaj()
+	//powoduje przerwę w wykonywaniu skryptów, a tym samym pozwala pokazać kolejność ładowania się elementów strony
 	{
 	for($i=0;$i<10000000;$i++);
 	}
