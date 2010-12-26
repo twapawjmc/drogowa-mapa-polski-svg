@@ -15,10 +15,16 @@ div#lewaKolumna
 display: table-cell;
 width: 300px;
 margin: 10px;
+padding: 0 5px;
 vertical-align: top;
 }
 
-h1
+div#tytul
+{
+height: 30px;
+}
+
+div#tytul h1
 {
 margin: 5px auto;
 text-align: center;
@@ -49,4 +55,11 @@ text-align: center;
 margin: 10px;
 padding: 10px;
 color: white;
+}
+
+div#legenda
+{
+border: 1px solid #AAA;
+padding: 2px;
+height: 630px;
 }

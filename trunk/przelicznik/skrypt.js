@@ -50,9 +50,10 @@ function oblicz()
 		var z = k.value;
 		if(this.id == "przeliczzge") var wzor = /^\s*([0-9.]+)\,([0-9.]+)(?:\,(?:[0-9.]+))?(.*)$/;
 		if(this.id == "przeliczdoge") var wzor = /^\s*([0-9.]+)\,([0-9.]+)(.*)$/;
-		if(this.id == "przeliczzmp") var wzor = /^\(([0-9.]+)\,([0-9.]+)\)\,?(.*)$/;
+		if(this.id == "przeliczzmp") var wzor = /^\(([0-9.]+)\,([0-9.]+)\),(.*)$/;
 		for(i=0;;++i)
 			{
+			window.document.title=i;
 			var koor = wzor.exec(z);
 			if(koor == null)
 				{

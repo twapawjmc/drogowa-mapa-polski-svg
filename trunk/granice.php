@@ -14,22 +14,70 @@ $Baltyk;
 
 //WOJEWÓDTWA
 
-$w[1][] = &$zachodniopomorskie;
-$w[1][] = &$pomorskie;
-$w[1][] = &$warminskomazurskie;
-$w[1][] = &$podlaskie;
-$w[1][] = &$mazowieckie;
-$w[1][] = &$kujawskopomorskie;
-$w[1][] = &$wielkopolskie;
-$w[1][] = &$lubuskie;
-$w[1][] = &$dolnoslaskie;
-$w[1][] = &$opolskie;
-$w[1][] = &$lodzkie;
-$w[1][] = &$swietokrzyskie;
-$w[1][] = &$lubelskie;
-$w[1][] = &$podkarpackie;
-$w[1][] = &$malopolskie;
-$w[1][] = &$slaskie;
+$w['zachodniopomorskie']=array(
+	'g'=>&$zachodniopomorskie,
+	'n'=>'zachodniopomorskie'
+	);
+$w['pomorskie']=array(
+	'g'=>&$pomorskie,
+	'n'=>'pomorskie'
+	);
+$w['warminskomazurskie']=array(
+	'g'=>&$warminskomazurskie,
+	'n'=>'warmińsko-mazurskie'
+	);
+$w['podlaskie']=array(
+	'g'=>&$podlaskie,
+	'n'=>'podlaskie'
+	);
+$w['mazowieckie']=array(
+	'g'=>&$mazowieckie,
+	'n'=>'mazowieckie'
+	);
+$w['kujawskopomorskie']=array(
+	'g'=>&$kujawskopomorskie,
+	'n'=>'kujawsko-pomorskie'
+	);
+$w['wielkopolskie']=array(
+	'g'=>&$wielkopolskie,
+	'n'=>'wielkopolskie'
+	);
+$w['lubuskie']=array(
+	'g'=>&$lubuskie,
+	'n'=>'lubuskie'
+	);
+$w['dolnoslaskie']=array(
+	'g'=>&$dolnoslaskie,
+	'n'=>'dolnośląskie'
+	);
+$w['opolskie']=array(
+	'g'=>&$opolskie,
+	'n'=>'opolskie'
+	);
+$w['lodzkie']=array(
+	'g'=>&$lodzkie,
+	'n'=>'łódzkie'
+	);
+$w['swietokrzyskie']=array(
+	'g'=>&$swietokrzyskie,
+	'n'=>'świętokrzyskie'
+	);
+$w['lubelskie']=array(
+	'g'=>&$lubelskie,
+	'n'=>'lubelskie'
+	);
+$w['podkarpackie']=array(
+	'g'=>&$podkarpackie,
+	'n'=>'podkarpackie'
+	);
+$w['malopolskie']=array(
+	'g'=>&$malopolskie,
+	'n'=>'małopolskie'
+	);
+$w['slaskie']=array(
+	'g'=>&$slaskie,
+	'n'=>'śląskie'
+	);
 
 
 $p; //punkty gdzie łączą się odcinki granic województw

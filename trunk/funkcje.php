@@ -1,5 +1,5 @@
 <?php
-function stworzWielokat($tt, $id) 
+function stworzWielokat($tt, $id=null, $t=null) 
 	//funkcja tworzy wielokąt łącząc podane w tablicy ocinki takimi samymi końcami.
 	{
 	$dbg=0; //tryb debugowania
@@ -8,7 +8,9 @@ function stworzWielokat($tt, $id)
 	$l; //liczba odcinków do połączenia
 	
 	//utworzenie tagu "polygon" i przypisanie identyfikatora podanego jako drugi argument funkcji
-	$polygon = '<polygon id="'.$id.'" points="';
+	$polygon = '<polygon ';
+	if($id!=null) $polygon .= 'id="'.$id.'" ';
+	$polygon .= 'points="';
 	
 	//rozbicie współrzędnych pierwszego odcinka i dodanie ich do naszego wielokąta
 	$p = explode("\r\n",$tt[0]);
@@ -148,12 +150,21 @@ function stworzWielokat($tt, $id)
 			}
 		if($dbg) echo "\n"."\n";
 		}
-	//dołączenie współrzędnych i zamknięcie tagu
-	$polygon .= implode(' ',$p).'"/>';
+	//dołączenie współrzędnych
+	$polygon .= implode(' ',$p);
+	if($t==null) $polygon .='"/>'."\r\n";
+	else
+		{
+		$polygon .= '">'."\r\n";
+		$polygon .= '<title>'.$t.'</title>'."\r\n";
+		$polygon .='</polygon>'."\r\n";
+		}
 	
 	//wydrukowanie wielokątu
 	echo $polygon;
 	}
+	
+
 
 function odwrocTablice($a)
 	//funkcja odwraca kolejność tablicy
