@@ -12,7 +12,10 @@ require 'drogi.php';
 		xmlns="http://www.w3.org/2000/svg"
 		xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:ev="http://www.w3.org/2001/xml-events"
+		viewBox="0 0 700 650"
+		id="mapa"
 		>
+	<script type="text/ecmascript" xlink:href="mapa.js" />
 	<title>Drogowa Mapa Polski</title>
 		
 	<defs>
@@ -36,7 +39,7 @@ require 'drogi.php';
 		//	}
 		foreach($d as $dr)
 			{
-			echo '<polyline points="'.$dr['w'].'" fill="none" stroke="red" stroke-width="0.3" />';
+			//echo '<polyline points="'.$dr['w'].'" fill="none" stroke="red" stroke-width="0.1" />';
 			}
 		?>
 	</g>
