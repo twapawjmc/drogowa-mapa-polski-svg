@@ -13,11 +13,13 @@ require 'drogi.php';
 		xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:ev="http://www.w3.org/2001/xml-events"
 		id="_svg"
+		height="655"
+		width="690"
 		>
 	<script type="text/ecmascript" xlink:href="mapa.js" />
 	<title>Drogowa Mapa Polski</title>
 	
-	<svg id="mapa" viewBox="0 0 700 650">
+	<g id="mapa" transform="matrix(1,0,0,1,0,0)">
 		<defs>
 			
 		<?php
@@ -43,5 +45,5 @@ require 'drogi.php';
 				}
 			?>
 		</g>
-	</svg>
+	</g>
 </svg>
