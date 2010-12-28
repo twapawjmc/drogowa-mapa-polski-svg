@@ -12,36 +12,36 @@ require 'drogi.php';
 		xmlns="http://www.w3.org/2000/svg"
 		xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:ev="http://www.w3.org/2001/xml-events"
-		viewBox="0 0 700 650"
-		id="mapa"
+		id="_svg"
 		>
 	<script type="text/ecmascript" xlink:href="mapa.js" />
 	<title>Drogowa Mapa Polski</title>
-		
-	<defs>
-		
-	<?php
-	stworzWielokat($Polska, 'polska');
-	?>
 	
-	</defs>
-	<use fill="#FFFFEE" stroke="#55AA55" stroke-width="0.2px" xlink:href="#polska" />
-	<g fill="none" stroke="#44AA44" stroke-width="0.1px" id="wojewodztwa_polski">
+	<svg id="mapa" viewBox="0 0 700 650">
+		<defs>
+			
 		<?php
-		foreach($w as $wid => $ww)
-			{
-			stworzWielokat($ww['g'], 'w_'.$wid, 'województwo '.$ww['n']);
-			}
-		//foreach($p as $p1)
-		//	{
-		//	$e = explode(',',trim($p1));
-		//	echo '<circle cx="'.$e[0].'" cy="'.$e[1].'" r="1" fill="#ff0000" stroke="red" stroke-width="3" />';
-		//	}
-		foreach($d as $dr)
-			{
-			//echo '<polyline points="'.$dr['w'].'" fill="none" stroke="red" stroke-width="0.1" />';
-			}
+		stworzWielokat($Polska, 'polska');
 		?>
-	</g>
-	
+		
+		</defs>
+		<use fill="#FFFFEE" stroke="#555555" stroke-width="1.5" xlink:href="#polska" id="pol" />
+		<g fill="none" stroke="#444444" stroke-width="0.5" id="wojewodztwa_polski">
+			<?php
+			foreach($w as $wid => $ww)
+				{
+				stworzWielokat($ww['g'], 'w_'.$wid, 'województwo '.$ww['n']);
+				}
+			//foreach($p as $p1)
+			//	{
+			//	$e = explode(',',trim($p1));
+			//	echo '<circle cx="'.$e[0].'" cy="'.$e[1].'" r="1" fill="#ff0000" stroke="red" stroke-width="3" />';
+			//	}
+			foreach($d as $dr)
+				{
+				//echo '<polyline points="'.$dr['w'].'" fill="none" stroke="red" stroke-width="0.1" />';
+				}
+			?>
+		</g>
+	</svg>
 </svg>
