@@ -17,7 +17,7 @@ var matrix = null;
 var el = {};
 
 var height = _svg.getAttribute('height');
-var width = _svg.getAttribute('height');
+var width = _svg.getAttribute('width');
 
 function load()
 	{
