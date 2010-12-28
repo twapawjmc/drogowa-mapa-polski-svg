@@ -31,7 +31,7 @@ text-align: center;
 font-size: 16pt;
 }
 
-div#mapa_svg
+div#mapa
 {
 vertical-align: top;
 display: table-cell;
@@ -42,13 +42,13 @@ padding: 5px;
 border: 1px solid #000;
 }
 
-div#mapa_svg object
+object#mapa_svg
 {
 height: 100%;
 width: 100%;
 }
 
-div#mapa_svg p
+object#mapa_svg p
 {
 background: red;
 text-align: center;
