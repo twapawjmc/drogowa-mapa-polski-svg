@@ -3,12 +3,8 @@ var mapa = {};
 var pP; //mijesce poprzedniego darzenia
 var p;
 var zoom = 1;
-var scale = 1;
 var w = window.innerWidth;
 var h = window.innerHeight;
-var dx = 0;
-var dy = 0;
-
 
 ustawZdarzenia(_svg);
 
@@ -83,8 +79,6 @@ function mouseWheel(e)
 		d = e.detail / -90;
 		}
 	
-	var matrix = mapa.element.getCTM();
-	
 	if(d<0) //przybliżenie
 		{
 		zoom *= 1.1;
@@ -96,16 +90,18 @@ function mouseWheel(e)
 		if (zoom < 0.5) zoom = 0.5;
 		}
 	
+	var matrix = mapa.element.getCTM();
+	
 	//aktualny zoom
-	var p2 = matrix.a;
+	var zoom2 = matrix.a;
 
 	//współrzędne punktu na mapie
-	var pX = (p.x-matrix.e)/p2; 
-	var pY = (p.y-matrix.f)/p2;
+	var pX = (p.x-matrix.e)/zoom2; 
+	var pY = (p.y-matrix.f)/zoom2;
 			
 	//przesuwamy mapę
-	matrix.e -= (w*zoom - w*p2)/(w/pX);
-	matrix.f -= (h*zoom - h*p2)/(h/pY);
+	matrix.e -= (w*zoom - w*zoom2)*pX/w;
+	matrix.f -= (h*zoom - h*zoom2)*pY/h;
 	
 	//przybliżamy
 	matrix.a = matrix.d = zoom;
