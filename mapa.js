@@ -1,5 +1,6 @@
 var _svg = document.documentElement;
 var mapa = {};
+var nav = {};
 var pP; //mijesce poprzedniego darzenia
 var p;
 var zoom = 1;
@@ -12,10 +13,8 @@ ustawZdarzenia(_svg);
 function ustawZdarzenia(_svg)
 	{
 	
-	_svg.onmousedown = mouseDown;
 	_svg.onmousemove = mouseMove;
 	_svg.onmouseup = mouseUp;
-	_svg.onmousewheel = mouseWheel;
 
 	if(window.addEventListener)
 		_svg.addEventListener('DOMMouseScroll', mouseWheel, false);
@@ -23,6 +22,9 @@ function ustawZdarzenia(_svg)
 	document.addEventListener('DOMContentLoaded', function(e){
 	
 		mapa.element = document.getElementById("mapa");
+		mapa.element.onmousedown = mouseDown;
+		mapa.element.onmousewheel = mouseWheel;
+		
 		mapa.woj = document.getElementById("wojewodztwa_polski");
 		mapa.wojsz = Number(mapa.woj.getAttribute('stroke-width'));
 		mapa.pol = document.getElementById("pol");
@@ -31,6 +33,19 @@ function ustawZdarzenia(_svg)
 		mapa.tA = mapa.element.transform.animVal;
 		mapa.tB = mapa.element.transform.baseVal;
 		
+		nav.element = document.getElementById("nawigacja");
+		nav.wlewo = document.getElementById("n_wlewo");
+		nav.wprawo = document.getElementById("n_wprawo");
+		nav.wgore = document.getElementById("n_wgore");
+		nav.wdol = document.getElementById("n_wdol");
+		nav.srodek = document.getElementById("n_srodek");
+		
+		nav.wlewo.onmousedown = function(){mapa.przenos = true;przesuwaj(10,0,10);};
+		nav.wprawo.onmousedown = function(){mapa.przenos = true;przesuwaj(-10,0,10);};
+		nav.wgore.onmousedown = function(){mapa.przenos = true;przesuwaj(0,10,10);};
+		nav.wdol.onmousedown = function(){mapa.przenos = true;przesuwaj(0,-10,10);};
+		nav.srodek.onmousedown = wysrodkuj;
+		
 		var t = mapa.m =  mapa.tB.createSVGTransformFromMatrix(mapa.element.getCTM());
 		if(mapa.tB.numberOfItems == 0) mapa.tB.clear();
 		mapa.tB.appendItem(t);
@@ -38,6 +53,32 @@ function ustawZdarzenia(_svg)
 		}, false);
 	}
 	
+function grubosc()
+	{
+	mapa.woj.setAttribute('stroke-width',mapa.wojsz/zoom);
+	mapa.pol.setAttribute('stroke-width',mapa.polsz/zoom);
+	}
+	
+function wysrodkuj()
+	{
+	var matrix = _svg.createSVGMatrix();
+	var t = mapa.tB.createSVGTransformFromMatrix(matrix);
+	mapa.tB.replaceItem(t,0);
+	zoom = 1;
+	grubosc();
+	}	
+	
+function przesuwaj(x,y,z)
+	{
+	if(!mapa.przenos) return;
+	var matrix = mapa.element.getCTM();
+	matrix.e += x;
+	matrix.f += y;
+	var t = mapa.tB.createSVGTransformFromMatrix(matrix);
+	mapa.tB.replaceItem(t,0);
+	window.setTimeout(function(){przesuwaj(x,y,z);},z);
+	}
+
 function mouseDown(e)
 	{
 	e = e || window.event;
@@ -90,14 +131,30 @@ function mouseWheel(e)
 		if (zoom < 0.5) zoom = 0.5;
 		}
 	
+	przybliz(zoom,p.x,p.y);
+		
+	}
+	
+function przybliz(z,x,y)
+	{
+	
+	//jeśli nie podamy współrzędnych punktu do którego przybliżyć to przybliżamy go do środka ekranu
+	if(x==undefined || y==undefined)
+		{
+		x=w/2;
+		y=h/2;
+		}
+	
+	zoom = z;
+	
 	var matrix = mapa.element.getCTM();
 	
 	//aktualny zoom
 	var zoom2 = matrix.a;
 
 	//współrzędne punktu na mapie
-	var pX = (p.x-matrix.e)/zoom2; 
-	var pY = (p.y-matrix.f)/zoom2;
+	var pX = (x-matrix.e)/zoom2; 
+	var pY = (y-matrix.f)/zoom2;
 			
 	//przesuwamy mapę
 	matrix.e -= (w*zoom - w*zoom2)*pX/w;
@@ -109,10 +166,7 @@ function mouseWheel(e)
 	var t = mapa.tB.createSVGTransformFromMatrix(matrix);
 	mapa.tB.replaceItem(t,0);
 	
-	//zmniejszamy grubość linii
-	mapa.woj.setAttribute('stroke-width',mapa.wojsz/zoom);
-	mapa.pol.setAttribute('stroke-width',mapa.polsz/zoom);
-		
+	grubosc();
 	}
 	
 function punktZdarzenia(e)

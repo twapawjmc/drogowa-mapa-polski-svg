@@ -35,10 +35,9 @@ div#mapa
 {
 vertical-align: top;
 display: table-cell;
-height: 660px;
+height: 665px;
 width: 700px;
 margin: 5px auto;
-padding: 5px;
 border: 1px solid #000;
 }
 
