@@ -44,14 +44,20 @@ require 'drogi.php';
 			?>
 		</g>
 	</g>
-	<svg id="nawigacja" x="600" y="10" width="90" height="200">
-		<rect width="100%" height="100%" fill="#999" opacity="0.05" rx="45" ry="50" stroke="#555"/>
-		<g fill="#999" opacity="0.05" stroke="black">
+	<svg id="nawigacja" x="600" y="10" width="90" height="220">
+		<rect width="100%" height="100%" fill="#999" opacity="0.1" rx="45" ry="50" stroke="#555"/>
+		<g fill="#999" opacity="0.1" stroke="black">
 		<path d="m 20 20 l  15  15 l   0  20 l -15  15 c -20 -25 -20 -25   0 -50 z" id="n_wlewo"/>
 		<path d="m 70 20 l -15  15 l -20   0 l -15 -15 c  25 -20  25 -20  50   0 z" id="n_wgore" />
 		<path d="m 70 70 l -15 -15 l   0 -20 l  15 -15 c  20  25  20  25   0  50 z" id="n_wprawo" />
 		<path d="m 20 70 l  15 -15 l  20   0 l  15  15 c -25  20 -25  20 -50   0 z" id="n_wdol" />
 		<path d="m 35 35 h 20 v 20 h -20 v -20 z" id="n_srodek" />
 		</g>
+		<g >
+		<path opacity="0.1" stroke="black" d="m 45 100 v 100 m -10 0 h 20 m -5 -25 h -10 m -5 -25 h 20 m -5 -25 h -10 m -5 -25 h 20 z" id="n_wlewo"/>
+		<rect id="n_polesuwaka" width="30" height="100" x="30" y="100" fill="#999" opacity="0.1" stroke="#555"/>
+		<rect id="n_suwak" width="30" height="5" fill="#000" opacity="0.4" rx="30" ry="5" x="30" y="98"/>
+		</g>
+		
 	</svg>
 </svg>
