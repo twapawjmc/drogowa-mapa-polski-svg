@@ -13,21 +13,19 @@ ustawZdarzenia(_svg);
 function ustawZdarzenia(_svg)
 	{
 	
-	_svg.onmousemove = mouseMove;
-	_svg.onmouseup = function(e)
-		{
-		mapa.przenos = false;
-		nav.przesuw = false;
-		};
-
-	
-		
-		_svg.onmousewheel = mouseWheel;
-		_svg.addEventListener('DOMMouseScroll', mouseWheel, false);
-		
 	document.addEventListener('DOMContentLoaded', function(e){
 	
 		mapa.element = document.getElementById("mapa");
+		
+		_svg.onmousemove = mouseMove;
+		_svg.onmouseup = function(e)
+			{
+			mapa.przenos = false;
+			nav.przesuw = false;
+			};
+		
+		_svg.addEventListener('DOMMouseScroll', mouseWheel, false);
+		_svg.onmousewheel = mouseWheel;
 		mapa.element.onmousedown = function(e){
 			e = e || window.event;
 			punktZdarzenia(e);
@@ -138,8 +136,6 @@ function suwak(e)
 	
 function mouseWheel(e)
 	{
-	console.log(e);
-	
 	e = e || window.event;
 	punktZdarzenia(e);
 	
@@ -166,7 +162,6 @@ function mouseWheel(e)
 		}
 	
 	przybliz(zoom,p.x,p.y);
-		
 	}
 	
 function przybliz(z,x,y)
