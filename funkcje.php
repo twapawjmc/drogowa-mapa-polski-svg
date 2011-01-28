@@ -183,4 +183,11 @@ function czekaj()
 	{
 	for($i=0;$i<10000000;$i++);
 	}
+	
+function d($a)
+	{
+	echo '<pre>';
+	var_dump($a);
+	echo '</pre>';
+	}
 ?>

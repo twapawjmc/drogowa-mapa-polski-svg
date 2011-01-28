@@ -42,7 +42,7 @@ function oblicz()
 		var szerokosc= Round((y-xy.y),4);
 		wyniki.innerHTML = wyniki.innerHTML + dlugosc +','+ szerokosc +" ";
 		}
-	if(this.id == "przeliczzge" || this.id == "przeliczdoge" || this.id == "przeliczzmp")
+	if(this.id == "przeliczzge" || this.id == "przeliczdoge" || this.id == "przeliczzmp" || this.id == "przeliczzgml")
 		{
 		var k = document.getElementById('koordynaty');
 		var sz2 = document.getElementById('szerokosc2');
@@ -51,6 +51,7 @@ function oblicz()
 		if(this.id == "przeliczzge") var wzor = /^\s*([0-9.]+)\,([0-9.]+)(?:\,(?:[0-9.]+))?(.*)$/;
 		if(this.id == "przeliczdoge") var wzor = /^\s*([0-9.]+)\,([0-9.]+)(.*)$/;
 		if(this.id == "przeliczzmp") var wzor = /^\(([0-9.]+)\,([0-9.]+)\),?(.*)$/;
+		if(this.id == "przeliczzgml") var wzor = /^([0-9.]+)\s*([0-9.]+)\s*(.*)$/;
 		for(i=0;;++i)
 			{
 			window.document.title=i;
@@ -62,9 +63,9 @@ function oblicz()
 			koor[1] = Number(koor[1]);
 			koor[2] = Number(koor[2]);
 			
-			if(this.id == "przeliczzge" || this.id == "przeliczzmp") 
+			if(this.id == "przeliczzge" || this.id == "przeliczzmp" || this.id == "przeliczzgml") 
 				{
-				if(this.id == "przeliczzge")
+				if(this.id == "przeliczzge" || this.id == "przeliczzgml")
 					{
 					var dl = koor[1]*3600;
 					var sz = koor[2]*3600;
