@@ -26,16 +26,16 @@ function ustawZdarzenia(_svg)
 		
 		_svg.addEventListener('DOMMouseScroll', mouseWheel, false);
 		_svg.onmousewheel = mouseWheel;
-		mapa.element.onmousedown = function(e){
+		_svg.onmousedown = function(e){
 			e = e || window.event;
 			punktZdarzenia(e);
 			mapa.przenos = true;
 			};
 		
-		mapa.woj = document.getElementById("wojewodztwa_polski");
+		mapa.woj = document.getElementById("wojewodztwa");
 		mapa.wojsz = Number(mapa.woj.getAttribute('stroke-width'));
-		mapa.pol = document.getElementById("pol");
-		mapa.polsz = Number(mapa.pol.getAttribute('stroke-width'));
+		mapa.pow = document.getElementById("powiaty");
+		mapa.powsz = Number(mapa.pow.getAttribute('stroke-width'));
 		mapa.przenos = false;
 		mapa.tA = mapa.element.transform.animVal;
 		mapa.tB = mapa.element.transform.baseVal;
@@ -82,7 +82,7 @@ function ustawZdarzenia(_svg)
 function grubosc()
 	{
 	mapa.woj.setAttribute('stroke-width',mapa.wojsz/zoom);
-	mapa.pol.setAttribute('stroke-width',mapa.polsz/zoom);
+	mapa.pow.setAttribute('stroke-width',mapa.powsz/zoom);
 	}
 	
 function wysrodkuj()

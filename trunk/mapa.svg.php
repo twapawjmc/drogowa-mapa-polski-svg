@@ -1,9 +1,8 @@
 <?php
 header('Content-type: image/svg+xml;charset=utf-8'); 
 //header('Content-type: text/plain;charset=utf-8'); 
-require 'granice.php';
 require 'funkcje.php';
-require 'drogi.php';
+require 'adm/wojewodztwa.php';
 
 ?>
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
@@ -18,30 +17,40 @@ require 'drogi.php';
 	<title>Drogowa Mapa Polski</title>
 	
 	<g id="mapa">
-		<defs>
-			
-		<?php
-		stworzWielokat($Polska, 'polska');
-		?>
-		
-		</defs>
-		<use fill="#FFFFEE" stroke="#555555" stroke-width="1.5" xlink:href="#polska" id="pol" />
-		<g fill="none" stroke="#444444" stroke-width="0.5" id="wojewodztwa_polski">
+		<g fill="none" stroke="#555555" stroke-width="0.2" id="wojewodztwa">
 			<?php
 			foreach($w as $wid => $ww)
 				{
-				stworzWielokat($ww['g'], 'w_'.$wid, 'województwo '.$ww['n']);
-				}
-			//foreach($p as $p1)
-			//	{
-			//	$e = explode(',',trim($p1));
-			//	echo '<circle cx="'.$e[0].'" cy="'.$e[1].'" r="1" fill="#ff0000" stroke="red" stroke-width="3" />';
-			//	}
-			foreach($d as $dr)
-				{
-				//echo '<polyline points="'.$dr['w'].'" fill="none" stroke="red" stroke-width="0.1" />';
+				echo '<polygon id="w_'.$wid.'" points="'.$ww['g'].'" >'."\n";
+				echo '<title>województwo '.$ww['n'].'</title>'."\n";
+				echo '</polygon>'."\n";
 				}
 			?>
+		</g>
+		<g fill="#FFFFEE" stroke="#555555" stroke-width="0.1" id="powiaty">
+		<?php
+		foreach($w as $wid => $ww)
+				{
+				foreach($ww['p'] as $pw)
+					{
+					echo '<polygon points="'.$pw['g'].'" >'."\n";
+					echo '<title>powiat '.$pw['n'].'</title>'."\n";
+					echo '</polygon>'."\n";
+					if(isset($pw['g2']))
+						{
+						echo '<polygon points="'.$pw['g2'].'" >'."\n";
+						echo '<title>powiat '.$pw['n'].'</title>'."\n";
+						echo '</polygon>'."\n";
+						if(isset($pw['g3']))
+							{
+							echo '<polygon points="'.$pw['g3'].'" >'."\n";
+							echo '<title>powiat '.$pw['n'].'</title>'."\n";
+							echo '</polygon>'."\n";
+							}
+						}
+					}
+				}
+		?>
 		</g>
 	</g>
 	<svg id="nawigacja" x="600" y="10" width="90" height="220">
