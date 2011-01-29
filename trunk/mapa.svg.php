@@ -16,8 +16,18 @@ require 'adm/wojewodztwa.php';
 	<script type="text/ecmascript" xlink:href="mapa.js" />
 	<title>Drogowa Mapa Polski</title>
 	
+	<defs>
+	<style type="text/css"><![CDATA[
+	.miasto {
+		fill: #888888;
+		}
+		]]></style>
+  </defs>
+	
 	<g id="mapa">
-		<g fill="none" stroke="#555555" stroke-width="0.2" id="wojewodztwa">
+		<polyline stroke="#002200" fill="#EEFFEE" stroke-width="2" id="polska" points="<?php echo $polska; ?>" 
+		/>
+		<g fill="rgba(0,0,0,0)" stroke="#003300" stroke-width="1" id="wojewodztwa">
 			<?php
 			foreach($w as $wid => $ww)
 				{
@@ -26,15 +36,16 @@ require 'adm/wojewodztwa.php';
 				echo '</polygon>'."\n";
 				}
 			?>
+			
 		</g>
-		<g fill="#FFFFEE" stroke="#555555" stroke-width="0.1" id="powiaty">
+		<g fill="none" stroke="none" stroke-width="0.3" id="powiaty">
 		<?php
 		foreach($w as $wid => $ww)
 				{
 				foreach($ww['p'] as $pw)
 					{
-					echo '<polygon points="'.$pw['g'].'" >'."\n";
-					echo '<title>powiat '.$pw['n'].'</title>'."\n";
+					echo '<polygon '.(($pw['m']==true)?'class="miasto" ':'').'points="'.$pw['g'].'" >'."\n";
+					echo '<title>'.(($pw['m']==true)?'':'powiat ').$pw['n'].'</title>'."\n";
 					echo '</polygon>'."\n";
 					if(isset($pw['g2']))
 						{
