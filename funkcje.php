@@ -2,7 +2,7 @@
 function stworzWielokat($tt, $id=null, $t=null) 
 	//funkcja tworzy wielokąt łącząc podane w tablicy ocinki takimi samymi końcami.
 	{
-	$dbg=0; //tryb debugowania
+	$dbg=1; //tryb debugowania
 	$polygon; //zawiera dane do wydrukowania
 	$p; //tablica zawierająca współrzędne tworzonego wielokąta
 	$l; //liczba odcinków do połączenia
@@ -13,10 +13,11 @@ function stworzWielokat($tt, $id=null, $t=null)
 	$polygon .= 'points="';
 	
 	//rozbicie współrzędnych pierwszego odcinka i dodanie ich do naszego wielokąta
-	$p = explode("\r\n",$tt[0]);
+	$p = explode(" ",$tt[0]);
 
 	//pobieramy liczbę odcinków
 	$l = sizeof($tt);
+	if($dbg) echo "\n".'['.'l='.$l.']'."\n";
 	
 	//gdy mamy więcej odcinków niż 1 to należy je dołączyć
 	if($l > 1)
@@ -28,7 +29,7 @@ function stworzWielokat($tt, $id=null, $t=null)
 			//pobieramy liczbę współrzędnych z których składa się dotychczas utworzony wielokąt
 			$liczbaWsp = sizeof($p);
 			
-			if($dbg) var_dump($p);
+			//if($dbg) var_dump($p);
 			if($dbg) echo '[liczbaWsp='.$liczbaWsp.']';
 			
 			//współrzędne pierwszego punktu wielokąta
@@ -54,7 +55,7 @@ function stworzWielokat($tt, $id=null, $t=null)
 				$aktGran2 = trim($tt[$j]);
 				
 				//kopiujemy współrzędne odcinka to tablicy
-				$wspAktGran2 = explode("\r\n",$aktGran2);
+				$wspAktGran2 = explode(" ",$aktGran2);
 				
 				//pobieramy liczbę współrzędnych odcinka
 				$liczbaWsp2 = sizeof($wspAktGran2);
