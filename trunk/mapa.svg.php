@@ -18,22 +18,19 @@ require 'adm/wojewodztwa.php';
 	
 	<defs>
 	<style type="text/css"><![CDATA[
-	.miasto {
-		fill: #888888;
-		}
+	#polska { stroke:#003300; fill:#EEFFEE; }
+	#wojewodztwa { stroke:#002200; fill:rgba(0,0,0,0); }
+	.miasto { fill: #888888; }
 		]]></style>
   </defs>
 	
 	<g id="mapa">
-		<polyline stroke="#002200" fill="#EEFFEE" stroke-width="2" id="polska" points="<?php echo $polska; ?>" 
-		/>
-		<g fill="rgba(0,0,0,0)" stroke="#003300" stroke-width="1" id="wojewodztwa">
+		<?php stworzWielokat(&$Polska, 'polska');?>
+		<g stroke-width="1" id="wojewodztwa">
 			<?php
 			foreach($w as $wid => $ww)
 				{
-				echo '<polygon id="w_'.$wid.'" points="'.$ww['g'].'" >'."\n";
-				echo '<title>województwo '.$ww['n'].'</title>'."\n";
-				echo '</polygon>'."\n";
+				stworzWielokat(&$ww['g'], $wid, 'województwo '.$ww['n']);
 				}
 			?>
 			
