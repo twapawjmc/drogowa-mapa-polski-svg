@@ -95,7 +95,7 @@ function grubosc()
 	
 function widok()
 	{
-	if(zoom<2.5) 
+	if(zoom<2) 
 		{
 		mapa.pow.style.display="none";
 		mapa.mi.style.display="none";
