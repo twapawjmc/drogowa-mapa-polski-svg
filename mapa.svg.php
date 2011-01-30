@@ -20,9 +20,10 @@ require 'adm/wojewodztwa.php';
 	<style type="text/css"><![CDATA[
 	#polska { stroke:#003300; fill:#EEFFEE; }
 	#wojewodztwa { stroke:#002200; fill:rgba(0,0,0,0); }
+	#powiaty { stroke:#005500; fill:rgba(0,0,0,0); display:none; }
 	#gminy { stroke:#002200; fill:rgba(0,0,0,0); }
-	#miasta { fill: #CCCCCC; stroke:white; }
-	.miastop { fill: #888888; }
+	#miasta polygon { fill: #CCCCCC; stroke:white; display:none; }
+	#miasta > polygon.miastop { fill: #888888; display:block; }
 		]]></style>
   </defs>
 	
@@ -37,9 +38,9 @@ require 'adm/wojewodztwa.php';
 			?>
 			
 		</g>
-		<g fill="none" stroke="none" stroke-width="0.1" id="powiaty">
+		<g stroke-width="0.1" id="powiaty">
 		<?php
-		foreach($w as $wid => $ww)
+		foreach($w as $ww)
 				{
 				foreach($ww['p'] as $pw)
 					{
@@ -64,11 +65,11 @@ require 'adm/wojewodztwa.php';
 		</g>
 		<g stroke-width="0.5" id="miasta">
 		<?php
-		foreach($w as $wid => $ww)
+		foreach($w as $ww)
 			{
 			foreach($ww['m'] as $mw)
 				{
-				echo '<polygon '.(($mw['p']==true)?'class="miastop" ':'').'points="'.$mw['g'].'" >'."\n";
+				echo '<polygon '.(($mw['p']==true)?'class="miastop" ':'class="miastoz" ').'points="'.$mw['g'].'" >'."\n";
 				echo '<title>'.$mw['n'].'</title>'."\n";
 				echo '</polygon>'."\n";
 				}
