@@ -38,6 +38,8 @@ function ustawZdarzenia(_svg)
 		mapa.powsz = Number(mapa.pow.getAttribute('stroke-width'));
 		mapa.mi = document.getElementById("miasta");
 		mapa.misz = Number(mapa.mi.getAttribute('stroke-width'));
+		mapa.miz = mapa.mi.getElementsByClassName('miastoz');
+		mapa.mip = mapa.mi.getElementsByClassName('miastop');
 		mapa.pol = document.getElementById("polska");
 		mapa.polsz = 1;
 		mapa.przenos = false;
@@ -95,15 +97,17 @@ function widok()
 	{
 	if(zoom<2.5) 
 		{
-		mapa.woj.setAttribute('fill','rgba(0,0,0,0)');
-		mapa.pow.setAttribute('fill','none');
-		mapa.pow.setAttribute('stroke','none');
+		mapa.pow.style.display="none";
+		mapa.mi.style.display="none";
+		for(i=0;i<mapa.miz.length;i++) {mapa.miz[i].style.display="none";}
+		mapa.mi.style.display="block";
 		}
 	else
 		{
-		mapa.pow.setAttribute('fill','rgba(0,0,0,0)');
-		mapa.woj.setAttribute('fill','none');
-		mapa.pow.setAttribute('stroke','#005500');
+		mapa.pow.style.display="block";
+		mapa.mi.style.display="none";
+		for(i=0;i<mapa.miz.length;i++) {mapa.miz[i].style.display="block";}
+		mapa.mi.style.display="block";
 		}
 	}
 	
