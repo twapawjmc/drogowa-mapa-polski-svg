@@ -21,7 +21,7 @@ require 'adm/wojewodztwa.php';
 	#polska { stroke:#003300; fill:#EEFFEE; }
 	#wojewodztwa { stroke:#002200; fill:rgba(0,0,0,0); }
 	#gminy { stroke:#002200; fill:rgba(0,0,0,0); }
-	#miasta { fill: #888888; stroke:white; }
+	#miasta { fill: #AAAAAA; stroke:white; }
 		]]></style>
   </defs>
 	
