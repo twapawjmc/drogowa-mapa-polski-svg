@@ -17,6 +17,6 @@ $w['lodzkie']=array( 'g'=>array(), 'n'=>'łódzkie' );
 $w['wielkopolskie']=array( 'g'=>array(), 'n'=>'wielkopolskie' );
 $w['kujawskopomorskie']=array( 'g'=>array(), 'n'=>'kujawsko-pomorskie' );
 require 'granice.php';
-
+require 'miasta.php';
 require 'powiaty.php';
 ?>

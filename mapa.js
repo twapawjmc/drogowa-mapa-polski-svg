@@ -36,8 +36,10 @@ function ustawZdarzenia(_svg)
 		mapa.wojsz = 1;
 		mapa.pow = document.getElementById("powiaty");
 		mapa.powsz = Number(mapa.pow.getAttribute('stroke-width'));
+		mapa.mi = document.getElementById("miasta");
+		mapa.misz = Number(mapa.mi.getAttribute('stroke-width'));
 		mapa.pol = document.getElementById("polska");
-		mapa.polsz = 2;
+		mapa.polsz = 1;
 		mapa.przenos = false;
 		mapa.tA = mapa.element.transform.animVal;
 		mapa.tB = mapa.element.transform.baseVal;
@@ -86,6 +88,7 @@ function grubosc()
 	mapa.woj.setAttribute('stroke-width',mapa.wojsz/zoom);
 	mapa.pow.setAttribute('stroke-width',mapa.powsz/zoom);
 	mapa.pol.setAttribute('stroke-width',mapa.polsz/zoom);
+	mapa.mi.setAttribute('stroke-width',mapa.misz/zoom);
 	}
 	
 function widok()

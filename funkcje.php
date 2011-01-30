@@ -2,7 +2,7 @@
 function stworzWielokat($tt, $id=null, $t=null) 
 	//funkcja tworzy wielokąt łącząc podane w tablicy ocinki takimi samymi końcami.
 	{
-	$dbg=1; //tryb debugowania
+	$dbg=0; //tryb debugowania
 	$polygon; //zawiera dane do wydrukowania
 	$p; //tablica zawierająca współrzędne tworzonego wielokąta
 	$l; //liczba odcinków do połączenia

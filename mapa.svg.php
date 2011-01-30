@@ -20,7 +20,8 @@ require 'adm/wojewodztwa.php';
 	<style type="text/css"><![CDATA[
 	#polska { stroke:#003300; fill:#EEFFEE; }
 	#wojewodztwa { stroke:#002200; fill:rgba(0,0,0,0); }
-	.miasto { fill: #888888; }
+	#gminy { stroke:#002200; fill:rgba(0,0,0,0); }
+	#miasta { fill: #888888; stroke:white; }
 		]]></style>
   </defs>
 	
@@ -35,13 +36,13 @@ require 'adm/wojewodztwa.php';
 			?>
 			
 		</g>
-		<g fill="none" stroke="none" stroke-width="0.3" id="powiaty">
+		<g fill="none" stroke="none" stroke-width="0.1" id="powiaty">
 		<?php
 		foreach($w as $wid => $ww)
 				{
 				foreach($ww['p'] as $pw)
 					{
-					echo '<polygon '.(($pw['m']==true)?'class="miasto" ':'').'points="'.$pw['g'].'" >'."\n";
+					echo '<polygon '.(($pw['m']==true)?'class="p_grodzki" ':'').'points="'.$pw['g'].'" >'."\n";
 					echo '<title>'.(($pw['m']==true)?'':'powiat ').$pw['n'].'</title>'."\n";
 					echo '</polygon>'."\n";
 					if(isset($pw['g2']))
@@ -59,6 +60,20 @@ require 'adm/wojewodztwa.php';
 					}
 				}
 		?>
+		</g>
+		<g stroke-width="0.5" id="miasta">
+		<?php
+		foreach($w as $wid => $ww)
+			{
+			foreach($ww['m'] as $mw)
+				{
+				echo '<polygon points="'.$mw['g'].'" >'."\n";
+				echo '<title>'.$mw['n'].'</title>'."\n";
+				echo '</polygon>'."\n";
+				}
+			}
+			?>
+			
 		</g>
 	</g>
 	<svg id="nawigacja" x="600" y="10" width="90" height="220">
