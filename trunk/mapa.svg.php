@@ -2,6 +2,7 @@
 header('Content-type: image/svg+xml;charset=utf-8'); 
 //header('Content-type: text/plain;charset=utf-8'); 
 require 'funkcje.php';
+require 'drogi/drogi.php';
 require 'adm/wojewodztwa.php';
 
 ?>
@@ -72,6 +73,23 @@ require 'adm/wojewodztwa.php';
 				echo '<polygon '.(($mw['p']==true)?'class="miastop" ':'class="miastoz" ').'points="'.$mw['g'].'" >'."\n";
 				echo '<title>'.$mw['n'].'</title>'."\n";
 				echo '</polygon>'."\n";
+				}
+			}
+			?>
+			
+		</g>
+		<g fill="none" stroke="red" stroke-width="0.5" id="drogi">
+		<?php
+		foreach($drogi as $r => $rodzaj)
+			{
+			foreach($rodzaj as $n => $numer)
+				{
+					foreach($numer as $odcinek)
+					{
+						echo '<polyline class="'.$r.' '.$n.'" points="'.$odcinek['g'].'" >'."\n";
+						echo '<title>'.$rodzaj['s'].$n.'</title>'."\n";
+						echo '</polyline>'."\n";
+					}
 				}
 			}
 			?>
