@@ -4,6 +4,9 @@ function oblicz()
 	var x = 969; //max zachód w sekundach ["]
 	var y = 6126; //max północ w sekundach ["]
 	
+	window.document.title='';
+	wyniki.innerHTML = '';
+	
 	if(this.id == "przelicz")
 		{
 		//grX = 0.01910279079487745; //dla 52°N

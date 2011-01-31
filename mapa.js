@@ -1,3 +1,5 @@
+//Autor: Kamil Piwowarski (9luty1992@gmail.com)
+
 var _svg = document.documentElement;
 var mapa = {};
 var nav = {};
@@ -41,6 +43,8 @@ function ustawZdarzenia(_svg)
 		mapa.miz = mapa.mi.getElementsByClassName('miastoz');
 		mapa.mip = mapa.mi.getElementsByClassName('miastop');
 		mapa.pol = document.getElementById("polska");
+		mapa.drogi = document.getElementById("drogi");
+		mapa.drogisz = Number(mapa.drogi.getAttribute('stroke-width'));
 		mapa.polsz = 1;
 		mapa.przenos = false;
 		mapa.tA = mapa.element.transform.animVal;
@@ -87,28 +91,29 @@ function ustawZdarzenia(_svg)
 	
 function grubosc()
 	{
+	mapa.element.style.display="none";
 	mapa.woj.setAttribute('stroke-width',mapa.wojsz/zoom);
 	mapa.pow.setAttribute('stroke-width',mapa.powsz/zoom);
 	mapa.pol.setAttribute('stroke-width',mapa.polsz/zoom);
 	mapa.mi.setAttribute('stroke-width',mapa.misz/zoom);
+	mapa.drogi.setAttribute('stroke-width',mapa.drogisz/zoom);
+	mapa.element.style.display="block";
 	}
 	
 function widok()
 	{
+	mapa.element.style.display="none";
 	if(zoom<2) 
 		{
 		mapa.pow.style.display="none";
-		mapa.mi.style.display="none";
 		for(i=0;i<mapa.miz.length;i++) {mapa.miz[i].style.display="none";}
-		mapa.mi.style.display="block";
 		}
 	else
 		{
 		mapa.pow.style.display="block";
-		mapa.mi.style.display="none";
 		for(i=0;i<mapa.miz.length;i++) {mapa.miz[i].style.display="block";}
-		mapa.mi.style.display="block";
 		}
+	mapa.element.style.display="block";
 	}
 	
 function wysrodkuj()
