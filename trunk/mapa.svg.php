@@ -19,12 +19,12 @@ require 'adm/wojewodztwa.php';
 	
 	<defs>
 	<style type="text/css"><![CDATA[
-	#polska { stroke:#003300; fill:#EEFFEE; }
-	#wojewodztwa { stroke:#002200; fill:rgba(0,0,0,0); }
-	#powiaty { stroke:#005500; fill:rgba(0,0,0,0); display:none; }
-	#gminy { stroke:#002200; fill:rgba(0,0,0,0); }
-	#miasta polygon { fill: #CCCCCC; stroke:white; display:none; }
-	#miasta > polygon.miastop { fill: #888888; display:block; }
+	#polska { stroke:#003300; fill:#EEFFEE; z-index:-100;}
+	#wojewodztwa { stroke:#002200; fill:rgba(0,0,0,0); z-index:-90;}
+	#powiaty { stroke:#005500; fill:rgba(0,0,0,0); display:none; z-index:-80;}
+	#miasta polygon { fill: #CCCCCC; stroke:white; display:none; z-index:-60;}
+	#miasta > polygon.miastop { fill: #888888; display:block; z-index:-90; }
+	#drogi { fill: none; stroke:red; z-index:100; z-index:1000;}
 		]]></style>
   </defs>
 	
@@ -78,7 +78,7 @@ require 'adm/wojewodztwa.php';
 			?>
 			
 		</g>
-		<g fill="none" stroke="red" stroke-width="0.5" id="drogi">
+		<g stroke-width="0.75" id="drogi">
 		<?php
 		foreach($drogi as $r => $rodzaj)
 			{
