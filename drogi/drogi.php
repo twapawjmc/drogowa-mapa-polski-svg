@@ -14,6 +14,7 @@ $drogi['dk'] = array(
 's'=>"DK "
 );
 
+include 'dk73.php';
 include 'dk78.php';
 
 ?>
