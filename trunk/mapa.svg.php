@@ -25,6 +25,7 @@ require 'adm/wojewodztwa.php';
 	#miasta polygon { fill: #CCCCCC; stroke:white; display:none; z-index:-60;}
 	#miasta > polygon.miastop { fill: #888888; display:block; z-index:-90; }
 	#drogi { fill: none; stroke:red; z-index:100; z-index:1000;}
+	#drogi .s { stroke:green;}
 		]]></style>
   </defs>
 	
@@ -78,7 +79,7 @@ require 'adm/wojewodztwa.php';
 			?>
 			
 		</g>
-		<g stroke-width="0.75" id="drogi">
+		<g stroke-width="1" id="drogi">
 		<?php
 		foreach($drogi as $r => $rodzaj)
 			{
