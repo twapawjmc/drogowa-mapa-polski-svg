@@ -18,7 +18,7 @@ $drogi['s'] = array(
 's'=>"S "
 );
 
-include '7.php';
+//include '7.php';
 include '73.php';
 include '78.php';
 

@@ -15,23 +15,23 @@ require 'adm/wojewodztwa.php';
 		zoomAndPan="disable"
 		>
 	<script type="text/ecmascript" xlink:href="mapa.js" />
-	<title>Drogowa Mapa Polski</title>
+	<title>Mapa</title>
 	
 	<defs>
 	<style type="text/css"><![CDATA[
-	#polska { stroke:#003300; fill:#EEFFEE; z-index:-100;}
-	#wojewodztwa { stroke:#002200; fill:rgba(0,0,0,0); z-index:-90;}
-	#powiaty { stroke:#005500; fill:rgba(0,0,0,0); display:none; z-index:-80;}
-	#miasta polygon { fill: #CCCCCC; stroke:white; display:none; z-index:-60;}
-	#miasta > polygon.miastop { fill: #888888; display:block; z-index:-90; }
-	#drogi { fill: none; stroke:red; z-index:100; z-index:1000;}
+	#polska { stroke:#003300; fill:#EEFFEE; }
+	#wojewodztwa { stroke:#002200; stroke-width:0.5; fill:rgba(0,0,0,0); }
+	#powiaty { stroke:#005500; stroke-width:0.1; fill:rgba(0,0,0,0); }
+	#miasta polygon { fill: #CCCCCC; stroke:white; stroke-width:0.5; }
+	#miasta > polygon.miastop { fill: #888888; display:block; }
+	#drogi { fill: none; stroke:red; stroke-width:1; }
 	#drogi .s { stroke:green;}
 		]]></style>
   </defs>
 	
-	<g id="mapa">
+	<g id="mapa" >
 		<?php stworzWielokat(&$Polska, 'polska');?>
-		<g stroke-width="1" id="wojewodztwa">
+		<g id="wojewodztwa">
 			<?php
 			foreach($w as $wid => $ww)
 				{
@@ -40,7 +40,7 @@ require 'adm/wojewodztwa.php';
 			?>
 			
 		</g>
-		<g stroke-width="0.1" id="powiaty">
+		<g id="powiaty">
 		<?php
 		foreach($w as $ww)
 				{
@@ -65,7 +65,7 @@ require 'adm/wojewodztwa.php';
 				}
 		?>
 		</g>
-		<g stroke-width="0.5" id="miasta">
+		<g id="miasta">
 		<?php
 		foreach($w as $ww)
 			{
@@ -79,7 +79,7 @@ require 'adm/wojewodztwa.php';
 			?>
 			
 		</g>
-		<g stroke-width="1" id="drogi">
+		<g id="drogi">
 		<?php
 		foreach($drogi as $r => $rodzaj)
 			{
@@ -97,20 +97,4 @@ require 'adm/wojewodztwa.php';
 			
 		</g>
 	</g>
-	<svg id="nawigacja" x="600" y="10" width="90" height="220">
-		<rect width="100%" height="100%" fill="#999" opacity="0.1" rx="45" ry="50" stroke="#555"/>
-		<g fill="#999" opacity="0.1" stroke="black">
-		<path d="m 20 20 l  15  15 l   0  20 l -15  15 c -20 -25 -20 -25   0 -50 z" id="n_wlewo"/>
-		<path d="m 70 20 l -15  15 l -20   0 l -15 -15 c  25 -20  25 -20  50   0 z" id="n_wgore" />
-		<path d="m 70 70 l -15 -15 l   0 -20 l  15 -15 c  20  25  20  25   0  50 z" id="n_wprawo" />
-		<path d="m 20 70 l  15 -15 l  20   0 l  15  15 c -25  20 -25  20 -50   0 z" id="n_wdol" />
-		<path d="m 35 35 h 20 v 20 h -20 v -20 z" id="n_srodek" />
-		</g>
-		<g >
-		<path opacity="0.1" stroke="black" d="m 45 100 v 100 m -10 0 h 20 m -5 -25 h -10 m -5 -25 h 20 m -5 -25 h -10 m -5 -25 h 20 z" id="n_wlewo"/>
-		<rect id="n_polesuwaka" width="30" height="100" x="30" y="100" fill="#999" opacity="0.1" stroke="#555"/>
-		<rect id="n_suwak" width="30" height="5" fill="#000" opacity="0.4" rx="30" ry="5" x="30" y="98"/>
-		</g>
-		
-	</svg>
 </svg>

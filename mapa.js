@@ -1,167 +1,124 @@
-//Autor: Kamil Piwowarski (9luty1992@gmail.com)
-
+var object = window.frameElement;
+var doc = object.ownerDocument;
+var win = doc.defaultView;
+var o = window.location.protocol +  '//' + window.location.host;
 var _svg = document.documentElement;
 var mapa = {};
-var nav = {};
+var zoom = 1;
 var pP; //mijesce poprzedniego darzenia
 var p;
-var zoom = 1;
 var w = window.innerWidth;
 var h = window.innerHeight;
+var svg_ns = "http://www.w3.org/2000/svg";
 
-ustawZdarzenia(_svg);
+document.addEventListener('DOMContentLoaded', function(){
 
-//ustawiamy obsługę zdarzeń
-function ustawZdarzenia(_svg)
-	{
-	
-	document.addEventListener('DOMContentLoaded', function(e){
-	
-		mapa.element = document.getElementById("mapa");
-		
-		_svg.onmousemove = mouseMove;
-		_svg.onmouseup = function(e)
-			{
-			mapa.przenos = false;
-			nav.przesuw = false;
-			};
-		
-		_svg.addEventListener('DOMMouseScroll', mouseWheel, false);
-		_svg.onmousewheel = mouseWheel;
-		_svg.onmousedown = function(e){
-			e = e || window.event;
-			punktZdarzenia(e);
-			mapa.przenos = true;
-			};
-		
-		mapa.woj = document.getElementById("wojewodztwa");
-		mapa.wojsz = 1;
-		mapa.pow = document.getElementById("powiaty");
-		mapa.powsz = Number(mapa.pow.getAttribute('stroke-width'));
-		mapa.mi = document.getElementById("miasta");
-		mapa.misz = Number(mapa.mi.getAttribute('stroke-width'));
-		mapa.miz = mapa.mi.getElementsByClassName('miastoz');
-		mapa.mip = mapa.mi.getElementsByClassName('miastop');
-		mapa.pol = document.getElementById("polska");
-		mapa.drogi = document.getElementById("drogi");
-		mapa.drogisz = Number(mapa.drogi.getAttribute('stroke-width'));
-		mapa.polsz = 1;
+	mapa.element = document.getElementById("mapa");
+
+	_svg.onmousemove = mouseMove;
+	_svg.onmouseup = function(e)
+		{
 		mapa.przenos = false;
-		mapa.tA = mapa.element.transform.animVal;
-		mapa.tB = mapa.element.transform.baseVal;
-		
-		nav.element = document.getElementById("nawigacja");
-		nav.wlewo = document.getElementById("n_wlewo");
-		nav.wprawo = document.getElementById("n_wprawo");
-		nav.wgore = document.getElementById("n_wgore");
-		nav.wdol = document.getElementById("n_wdol");
-		nav.srodek = document.getElementById("n_srodek");
-		nav.suwak = document.getElementById("n_suwak");
-		nav.polesuwaka = document.getElementById("n_polesuwaka");
-		
-		nav.przesuw = false;
-		
-		nav.wlewo.onmousedown = function(){mapa.przenos = true;przesuwaj(10,0,10);};
-		nav.wprawo.onmousedown = function(){mapa.przenos = true;przesuwaj(-10,0,10);};
-		nav.wgore.onmousedown = function(){mapa.przenos = true;przesuwaj(0,10,10);};
-		nav.wdol.onmousedown = function(){mapa.przenos = true;przesuwaj(0,-10,10);};
-		nav.srodek.onmousedown = wysrodkuj;
-		nav.suwak.onmousedown = function(e){
-			e = e || window.event;
-			punktZdarzenia(e);
-			nav.przesuw = true;
 		};
-		nav.element.onmousemove = suwak;
-		nav.polesuwaka.onclick = function(e){
-			e = e || window.event;
-			nav.przesuw = true;
-			p.y = Number(nav.suwak.getAttribute('y'))+10;
-			punktZdarzenia(e);
-			suwak(e);
-			nav.przesuw = false;
-			
+
+	_svg.addEventListener('DOMMouseScroll', mouseWheel, false);
+	_svg.onmousewheel = mouseWheel;
+	_svg.onmousedown = function(e)
+		{
+		e = e || window.event;
+		punktZdarzenia(e);
+		mapa.przenos = true;
 		};
+
+	mapa.przenos = false;
+	mapa.tA = mapa.element.transform.animVal;
+	mapa.tB = mapa.element.transform.baseVal;
+	
+	restart();
+	
+	window.addEventListener('message', function(e){
+	
+	if(e.data.mapa_przybliz) przybliz(e.data.mapa_przybliz);
+	if(e.data.mapa_reset) restart();
+	if(e.data.mapa_przesun) przesun(e.data.mapa_przesun.x,e.data.mapa_przesun.y);
+	
+	}, false);
+	
+	var wojewodztwa = new Worker('worker.js');
+	
+	wojewodztwa.addEventListener( "message", function(event) {
 		
-		var t = mapa.m =  mapa.tB.createSVGTransformFromMatrix(mapa.element.getCTM());
-		if(mapa.tB.numberOfItems == 0) mapa.tB.clear();
-		mapa.tB.appendItem(t);
+		if(event.data.polygon)
+				{
+				var w = event.data.polygon;
+				var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+				polygon.setAttribute("points", w.p);
+				polygon.setAttribute("fill", "green");
+				polygon.setAttribute("stroke", "red");
+				polygon.setAttribute("stroke-width", "1");
+				polygon.setAttribute("opacity", "0.3");
+				if(w.id=='polska')
+				{
+				polygon.id="polska";
+				w.t = "Polska";
+				}
+				else
+				{
+				polygon.id='w_'+w.id;
+				w.t = "województwo " + w.t;
+				}
+				
+				var polygont = document.createElement("title");
+				
+				polygont.appendChild(document.createTextNode(w.t));
+				
+				polygon.appendChild(polygont);
+
+				mapa.element.appendChild(polygon);
+
+				}
+		if(event.data.close) wojewodztwa.terminate();
 		
-		}, false);
-	}
+		if(event.data.info) info(event.data.info);
+		if(event.data.alert) alert(event.data.alert);
+
+			}, true );
 	
-function grubosc()
-	{
-	mapa.element.style.display="none";
-	mapa.woj.setAttribute('stroke-width',mapa.wojsz/zoom);
-	mapa.pow.setAttribute('stroke-width',mapa.powsz/zoom);
-	mapa.pol.setAttribute('stroke-width',mapa.polsz/zoom);
-	mapa.mi.setAttribute('stroke-width',mapa.misz/zoom);
-	mapa.drogi.setAttribute('stroke-width',mapa.drogisz/zoom);
-	mapa.element.style.display="block";
-	}
+	var woj;
+	if(window.localStorage) woj = window.localStorage.getItem( 'woj' );
+	wojewodztwa.postMessage({start:woj});
 	
-function widok()
-	{
-	mapa.element.style.display="none";
-	if(zoom<2) 
-		{
-		mapa.pow.style.display="none";
-		for(i=0;i<mapa.miz.length;i++) {mapa.miz[i].style.display="none";}
-		}
-	else
-		{
-		mapa.pow.style.display="block";
-		for(i=0;i<mapa.miz.length;i++) {mapa.miz[i].style.display="block";}
-		}
-	mapa.element.style.display="block";
-	}
-	
-function wysrodkuj()
+	win.postMessage({mapa_loaded:true}, o);
+
+}, false);
+
+function restart()
 	{
 	var matrix = _svg.createSVGMatrix();
+	matrix.e = window.innerWidth/2-690/2;
+	matrix.f = window.innerHeight/2-653/2;
 	var t = mapa.tB.createSVGTransformFromMatrix(matrix);
-	mapa.tB.replaceItem(t,0);
-	przybliz(1)
-	nav.suwak.setAttribute('y',98);
-	}	
+	if(mapa.tB.numberOfItems != 0) mapa.tB.clear();
+	mapa.tB.appendItem(t);
+	zoom = 1;
+	win.postMessage({mapa_zoom:zoom}, o);
+	}
 	
-function przesuwaj(x,y,z)
+function przesun(x,y)
 	{
-	if(!mapa.przenos) return;
 	var matrix = mapa.element.getCTM();
 	matrix.e += x;
 	matrix.f += y;
 	var t = mapa.tB.createSVGTransformFromMatrix(matrix);
 	mapa.tB.replaceItem(t,0);
-	window.setTimeout(function(){przesuwaj(x,y,z);},z);
 	}
-	
+
 function mouseMove(e)
 	{
 	e = e || window.event;
 	punktZdarzenia(e);
 	if(!mapa.przenos) return;
-	
-	var matrix = mapa.element.getCTM()
-	matrix.e += (p.x - pP.x);
-	matrix.f += (p.y - pP.y);
-	var t = mapa.tB.createSVGTransformFromMatrix(matrix);
-	mapa.tB.replaceItem(t,0);
-	}
-	
-function suwak(e)
-	{
-	if(!nav.przesuw) return;
-	
-	var y = Number(nav.suwak.getAttribute('y'));
-	
-	y += (p.y - pP.y);
-	if(y<98)y=98;
-	if(y>197)y=197;
-	
-	przybliz(Math.pow(10,(y-97)/50));
-	
-	nav.suwak.setAttribute('y',y);
+	przesun(p.x - pP.x,p.y - pP.y);
 	}
 	
 function mouseWheel(e)
@@ -210,29 +167,34 @@ function przybliz(z,x,y)
 	
 	//aktualny zoom
 	var zoom2 = matrix.a;
+	
+	//różnica przybliżeń
+	var r = zoom - zoom2;
 
 	//współrzędne punktu na mapie
 	var pX = (x-matrix.e)/zoom2; 
 	var pY = (y-matrix.f)/zoom2;
 			
 	//przesuwamy mapę
-	matrix.e -= (zoom - zoom2)*pX;
-	matrix.f -= (zoom - zoom2)*pY;
+	matrix.e -= r*pX;
+	matrix.f -= r*pY;
 	
 	//przybliżamy
 	matrix.a = matrix.d = zoom;
 	
 	var t = mapa.tB.createSVGTransformFromMatrix(matrix);
 	mapa.tB.replaceItem(t,0);
-	
-	nav.suwak.setAttribute('y',97 + 50*Math.log(zoom)/Math.log(10));
-	
-	grubosc();
-	widok();
+	win.postMessage({mapa_zoom:zoom}, o);
+
 	}
 	
 function punktZdarzenia(e)
 	{
 	pP = p;
 	p = {x:e.clientX,y:e.clientY};
+	}
+	
+function info(x)
+	{
+	win.postMessage({info:x}, o);
 	}
