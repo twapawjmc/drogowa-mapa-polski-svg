@@ -6,17 +6,23 @@ padding: 0
 
 body
 {
-display:table;
-padding: 2px;
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+width: 100%;
+background: rgba(123,178,230,0.4);
+z-index: -1001;
 }
 
 div#lewaKolumna
 {
-display: table-cell;
-width: 300px;
-margin: 10px;
-padding: 0 5px;
-vertical-align: top;
+position: absolute;
+top: 0;
+left: 0;
+width: 250px;
+height: 100%;
+background:rgba(230,230,230,0.6);
 }
 
 div#tytul
@@ -31,34 +37,35 @@ text-align: center;
 font-size: 16pt;
 }
 
-div#mapa
+object#mapa
 {
-vertical-align: top;
-display: table-cell;
-height: 665px;
-width: 700px;
-margin: 5px auto;
-border: 1px solid #000;
-}
-
-object#mapa_svg
-{
+position: absolute;
 height: 100%;
 width: 100%;
+z-index: -1000;
 }
 
-object#mapa_svg p
+object#nawigacja
 {
-background: red;
+position: absolute;
+right: 30px;
+top: 30px;
+width: 90px;
+height: 220px;
+}
+
+div#info_d
+{
+position: absolute;
 text-align: center;
-margin: 10px;
-padding: 10px;
-color: white;
+height: 20px;
+left: 0;
+right: 0;
 }
 
-div#legenda
+span#info
 {
-border: 1px solid #AAA;
+background: rgba(200,200,200,0.6);
 padding: 2px;
-height: 630px;
+border-radius: 2px;
 }
