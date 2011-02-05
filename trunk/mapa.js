@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	mapa.element = document.getElementById("mapa");
 	mapa.grub = new Array;
+	mapa.pol = document.getElementById('pol');
+	mapa.woj = document.getElementById('woj');
+	mapa.pow = document.getElementById('pow');
 
 	_svg.onmousemove = mouseMove;
 	_svg.onmouseup = function(e)
@@ -45,13 +48,13 @@ document.addEventListener('DOMContentLoaded', function(){
 	
 	}, false);
 	
-	var wojewodztwa = new Worker('worker.js');
+	var worker = new Worker('worker.js');
 	
-	wojewodztwa.addEventListener( "message", function(event) {
+	worker.addEventListener( "message", function(event) {
 		
-		if(event.data.polygon)
+		if(event.data.polygon_granice)
 				{
-				var w = event.data.polygon;
+				var w = event.data.polygon_granice;
 				var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 				polygon.setAttribute("points", w.p);
 				if(w.id=='polska')
@@ -79,16 +82,47 @@ document.addEventListener('DOMContentLoaded', function(){
 				mapa.grub[mapa.grub.length] = new Array(el,Number(el.getAttribute('stroke-width')));
 				
 				}
-		if(event.data.close) wojewodztwa.terminate();
-		
+		if(event.data.granice_ls) 
+			{
+			if(window.localStorage) window.localStorage.setItem( 'gra', event.data.granice_ls );
+			mapa.granice_ls = JSON.parse(event.data.granice_ls);
+			}
+		if(event.data.powiaty_ls) 
+			{
+			if(window.localStorage) window.localStorage.setItem( 'pow', event.data.powiaty_ls );
+			mapa.powiaty_ls = JSON.parse(event.data.powiaty_ls);
+			}
+		if(event.data.miasta_ls) 
+			{
+			if(window.localStorage) window.localStorage.setItem( 'miasta', event.data.miasta_ls );
+			mapa.miasta_ls = JSON.parse(event.data.miasta_ls);
+			}
+		if(event.data.powiaty_koniec) 
+			{
+			alert(mapa.miasta_ls);
+			
+			var m;
+			if(window.localStorage) mapa.miasta_ls = JSON.parse(m = window.localStorage.getItem( 'miasta' ));
+			worker.postMessage({start_miasta:(m?m:true)});
+			}
+		if(event.data.miasta_koniec) 
+			{
+			alert(mapa.miasta_ls);
+			}
+		if(event.data.polygon_granice_koniec) 
+			{
+			var pow;
+			if(window.localStorage) mapa.miasta_ls = JSON.parse(pow = window.localStorage.getItem( 'pow' ));
+			worker.postMessage({start_powiaty:(pow?pow:true)});
+			}
 		if(event.data.info) info(event.data.info);
 		if(event.data.alert) alert(event.data.alert);
 
 			}, true );
 	
-	var woj;
-	if(window.localStorage) woj = window.localStorage.getItem( 'woj' );
-	wojewodztwa.postMessage({start:woj});
+	var gr;
+	if(window.localStorage) mapa.granice_ls = JSON.parse(gr = window.localStorage.getItem( 'gra' ));
+	worker.postMessage({start_granice:(gr?gr:true)});
 	
 	win.postMessage({mapa_loaded:true}, o);
 
@@ -210,6 +244,6 @@ function grubosc()
 	{
 	mapa.grub[i][0].setAttribute('stroke-width',mapa.grub[i][1]/zoom);
 	}
-	
+	mapa.pow.style.display = (zoom<2.5)?"none":"block";
 	mapa.element.style.display = "block";
 	}

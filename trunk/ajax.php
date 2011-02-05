@@ -14,7 +14,30 @@ if(isset($_GET['granice']))
 		$g = array_merge($g,$v);
 		}
 	}
-
+elseif(isset($_GET['powiaty']))
+	{
+	include 'adm/powiaty.php';
+	if(isset($_GET['v'])) 
+		{
+		echo json_encode($v); exit ;
+		}
+	else 
+		{
+		$g = array_merge($w,$v);
+		}
+	}
+elseif(isset($_GET['miasta']))
+	{
+	include 'adm/miasta.php';
+	if(isset($_GET['v'])) 
+		{
+		echo json_encode($v); exit ;
+		}
+	else 
+		{
+		$g = array_merge($w,$v);
+		}
+	}
 
 
 

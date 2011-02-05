@@ -12,11 +12,10 @@
 
 <g id="mapa" >
 
-	<g id="pol">
-	</g>
-
-	<g id="woj">
-	</g>
+	<g id="pol"></g>
+	<g id="woj"></g>
+	<g id="pow"></g>
+	<g id="miasta"></g>
 	
 </g>
 </svg>

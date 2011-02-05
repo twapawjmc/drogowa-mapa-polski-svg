@@ -1,18 +1,32 @@
 var w={};
 
 onmessage = function(event) {
-if(event.data.start)
+if(event.data.start_granice || event.data.start_powiaty || event.data.start_miasta)
 	{
 	postMessage({info:{d:true,t:"Ładowanie...",b:"rgba(200,200,200,0.6)"}});
 	var download=true;
 	
-	var woj = event.data.start;
-	if(woj!=undefined)
+	if(event.data.start_granice) 
 		{
-		w = JSON.parse(woj);
+		var gr = event.data.start_granice;
+		var q = 'granice';
+		}
+	else if(event.data.start_powiaty) 
+		{
+		var gr = event.data.start_powiaty;
+		var q = 'powiaty';
+		}
+	else if(event.data.start_miasta) 
+		{
+		var gr = event.data.start_miasta;
+		var q = 'miasta';
+		}
+	
+	if(gr!=undefined && gr!==true)
+		{
+		w = JSON.parse(gr);
 		var req = new XMLHttpRequest();
-		
-		req.open('GET', 'ajax.php?granice&v', false);
+		req.open('GET', 'ajax.php?'+q+'&v', false);
 		req.onreadystatechange = function (aEvt)
 			{
 			if (req.readyState == 4)
@@ -20,7 +34,6 @@ if(event.data.start)
 				if(req.status == 200)
 					{
 					w.cv = JSON.parse(req.responseText).v;
-					postMessage({ls:req.responseText});
 					}
 				else
 					{
@@ -38,17 +51,20 @@ if(event.data.start)
 		postMessage({info:{d:true,t:"Pobieranie...",b:"rgba(200,200,200,0.6)"}});
 		var req = new XMLHttpRequest();
 		
-		req.open('GET', 'ajax.php?granice', true);
+		req.open('GET', 'ajax.php?'+q, true);
 		req.onreadystatechange = function (aEvt)
 			{
 			if (req.readyState == 4)
 				{
 				if(req.status == 200)
 					{
-						postMessage({info:{d:true,t:"Pobrano...",b:"rgba(200,200,200,0.6)"}});
+						postMessage({info:{d:false,t:"Pobrano...",b:"rgba(200,200,200,0.6)"}});
 						w = JSON.parse(req.responseText);
-						postMessage({ls:req.responseText});
-						start();
+						if(event.data.start_granice) postMessage({granice_ls:req.responseText});
+						else if(event.data.start_powiaty) postMessage({powiaty_ls:req.responseText});
+						else if(event.data.start_miasta) postMessage({miasta_ls:req.responseText});
+						
+						if(event.data.start_granice) start_gr();
 					}
 					else postMessage({info:{d:true,t:"Błąd podczas ładowania strony.",b:"red"}});
 				}
@@ -57,12 +73,15 @@ if(event.data.start)
 		}
 	else
 		{
-		start();
+		if(event.data.start_granice) start_gr();
+		postMessage({info:{d:false,t:"Nie pobrano...",b:"rgba(200,200,200,0.6)"}});
 		}
+	if(event.data.start_powiaty) postMessage({powiaty_koniec:true});
+	else if(event.data.start_miasta) postMessage({miasta_koniec:true});
 	}
 };
 
-function start()
+function start_gr()
 	{
 	var x = new Array;
 	postMessage({info:{d:true,t:"Sortowanie...",b:"rgba(200,200,200,0.6)"}});
@@ -85,13 +104,13 @@ function start()
 		{
 		l2++;
 		postMessage({info:{d:true,t:"Tworzenie wielokątów... ("+l2+"/"+l+")",b:"rgba(200,200,200,0.6)"}});
-		postMessage({polygon:{id:i,t:w.wojewodztwa[i],p:polaczOdcinki(x[i])}});
+		postMessage({polygon_granice:{id:i,t:w.wojewodztwa[i],p:polaczOdcinki(x[i])}});
 		}
 	postMessage({info:{d:false,t:"",b:"rgba(200,200,200,0.6)"}});
-	postMessage({close:true});
+	postMessage({polygon_granice_koniec:true});
+	
 	}
-
-
+	
 function polaczOdcinki(t)
 {
 

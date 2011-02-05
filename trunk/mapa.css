@@ -1,7 +1,7 @@
-#pol { stroke:#003300; fill:#99FF99; }
-#woj { stroke:#002200; fill:rgba(0,0,0,0.1); }
-/*#powiaty { stroke:#005500; stroke-width:0.1; fill:rgba(0,0,0,0); }
-#miasta polygon { fill: #CCCCCC; stroke:white; stroke-width:0.5; }
-#miasta > polygon.miastop { fill: #888888; display:block; }
-#drogi { fill: none; stroke:red; stroke-width:1; }
-#drogi .s { stroke:green;}*/
+#pol { stroke:#003300; fill:#EEEEEE; }
+#woj { stroke:#002200; fill:rgba(0,0,0,0); }
+#pow { stroke:#005500; stroke-width:0.1; fill:rgba(0,0,0,0); }
+#miasta polygon { fill: #CCCCCC; stroke:white; }
+#miasta > polygon.miastop { fill: #888888; }
+#drogi { fill: none; stroke:red; }
+#drogi .s { stroke:green;}

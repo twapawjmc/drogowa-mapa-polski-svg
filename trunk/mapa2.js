@@ -10,10 +10,19 @@ var w = window.innerWidth;
 var h = window.innerHeight;
 var svg_ns = "http://www.w3.org/2000/svg";
 var nav = {};
+var o = window.location.protocol +  '//' + window.location.host;
 
 document.addEventListener('DOMContentLoaded', function(){
 
+	win.postMessage('mapa_loaded', o);
 	mapa.element = document.getElementById("mapa");
+	
+	mapa.pol = document.getElementById('pol');
+	mapa.woj = document.getElementById('woj');
+	mapa.pow = document.getElementById('pow');
+	mapa.miasta = document.getElementById('mia');
+	mapa.miastap = document.getElementsByClassName('miastop');
+	mapa.miastaz = document.getElementsByClassName('miastoz');
 	mapa.grub = new Array;
 	
 	nav.element = document.getElementById("nawigacja");
@@ -54,8 +63,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		
 		}
 	
-	restart();
-	
 	document.onmouseup = function(e)
 		{
 		nav.przenos = false;
@@ -80,20 +87,25 @@ document.addEventListener('DOMContentLoaded', function(){
 		suwak(e);
 		nav.przesuw = false;	
 		};
+	restart();
+	restart();
 
 }, false);
 
 function restart()
 	{
+	w = window.innerWidth;
+	h = window.innerHeight;
 	var matrix = _svg.createSVGMatrix();
-	matrix.e = window.innerWidth/2-690/2;
-	matrix.f = window.innerHeight/2-653/2;
+	matrix.e = w/2-690/2;
+	matrix.f = h/2-653/2;
 	var t = mapa.tB.createSVGTransformFromMatrix(matrix);
 	if(mapa.tB.numberOfItems != 0) mapa.tB.clear();
 	mapa.tB.appendItem(t);
 	zoom = 1;
 	grubosc();
 	nav.suwak.setAttribute('y',95 + 50*Math.log(zoom)/Math.log(10));
+	nav.element.setAttribute('x',w-120);
 	}
 	
 function przesun(x,y)
@@ -190,11 +202,10 @@ function punktZdarzenia(e)
 function grubosc()
 	{
 	mapa.element.style.display = "none";
-	for(i=0;i<mapa.grub.length;i++)
-	{
-	mapa.grub[i][0].setAttribute('stroke-width',mapa.grub[i][1]/zoom);
-	}
+	for(i=0;i<mapa.grub.length;i++)	mapa.grub[i][0].setAttribute('stroke-width',mapa.grub[i][1]/zoom);
 	
+	for(i=0;i<mapa.miastaz.length;i++) mapa.miastaz[i].style.display = (zoom<2.5)?"none":"block";
+	mapa.pow.style.display = (zoom<2.5)?"none":"block";
 	mapa.element.style.display = "block";
 	}
 
