@@ -9,6 +9,7 @@ var mn;
 var o = window.location.protocol +  '//' + window.location.host;
 var info;
 var x = new Array;
+var l = true;
 
 addEvent(window, 'message', function(e){
 	if(e.data==='mapa_loaded')
@@ -60,6 +61,33 @@ addEvent(document,'DOMContentLoaded', function(){
 		nav.parentNode.removeChild(nav);
 		document.getElementById('info').parentNode.style.display = "none";
 		document.getElementById('lewaKolumna').style.display = "none";
+	});
+	
+	var lKzwin = document.getElementById('lKzwin');
+	addEvent(lKzwin, 'click', function(){
+		if(l == true)
+			{
+			var i = 250
+			var t = setInterval(function(){
+				i-=5;
+				document.getElementById('lewaKolumna').style.width = i+"px";
+				if(i==10) clearInterval(t);
+			},30)
+			lKzwin.innerText = "+";
+			l = false;
+			}
+		else
+			{
+			var i = 10
+			var t = setInterval(function(){
+				i+=5;
+				document.getElementById('lewaKolumna').style.width = i+"px";
+				if(i==250) clearInterval(t);
+			},30)
+			lKzwin.innerText = "-";
+			l = true;
+			}
+		
 	});
 	
 });
