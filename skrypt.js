@@ -11,9 +11,13 @@ var info;
 var x = new Array;
 
 addEvent(window, 'message', function(e){
-	//if(opera) opera.postError("Wiadomość od " + e.source.location);
-	//console.log(dump(e.data,10));
-	//console.log(e.data);
+	if(e.data==='mapa_loaded')
+		{
+		mm = e.source;
+		svg_loaded = true;
+		nav_loaded = true;
+		load();
+		}
 	if(e.data.mapa_loaded==true)
 		{
 		mm = e.source
@@ -50,7 +54,7 @@ addEvent(document,'DOMContentLoaded', function(){
 	load();
 	var easyv = document.getElementById('easyv')
 	
-addEvent(easyv, 'click', function(){
+	if(easyv) addEvent(easyv, 'click', function(){
 		document.getElementById('mapa').setAttribute('data','mapa.svg.php');
 		var nav = document.getElementById('nawigacja');
 		nav.parentNode.removeChild(nav);

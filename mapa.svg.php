@@ -4,6 +4,8 @@ header('Content-type: image/svg+xml;charset=utf-8');
 require 'funkcje.php';
 //require 'drogi/drogi.php';
 require 'adm/wojewodztwa.php';
+require 'adm/powiaty.php';
+require 'adm/miasta.php';
 
 ?>
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
@@ -20,15 +22,13 @@ require 'adm/wojewodztwa.php';
 	
 	<g id="mapa" >
 		<g id="pol"><?php pol(1);?></g>
-		<g id="woj">
-			<?php
-			woj(0.5);
-			?>
-			
-		</g>
+		<g id="woj"><?php woj(0.5);?></g>
+		<g id="pow"><?php powiaty(0.2);?></g>
+		<g id="miasta"><?php miasta(0.1);?></g>
+	
 		
 	</g>
-	<svg id="nawigacja" y="10" width="90" height="220">
+	<svg id="nawigacja" y="30" width="90" height="220">
 	<defs>
 	<linearGradient id="gradient1">
 		<stop offset="5%" stop-color="black" stop-opacity="1" />
