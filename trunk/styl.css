@@ -23,11 +23,29 @@ left: 0;
 width: 250px;
 height: 100%;
 background:rgba(230,230,230,0.6);
+text-align: center;
+overflow: hidden ;
+}
+
+div#lewaKolumna > *
+{
+overflow: hidden ;
+}
+
+div#lKzwin
+{
+position: absolute;
+top: 0;
+right: 0;
+width: 10px;
+height: 100%;
+background:rgba(230,230,230,0.6);
 }
 
 div#tytul
 {
 height: 30px;
+margin-right: 10px;
 }
 
 div#tytul h1
