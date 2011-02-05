@@ -14,6 +14,7 @@ var svg_ns = "http://www.w3.org/2000/svg";
 document.addEventListener('DOMContentLoaded', function(){
 
 	mapa.element = document.getElementById("mapa");
+	mapa.grub = new Array;
 
 	_svg.onmousemove = mouseMove;
 	_svg.onmouseup = function(e)
@@ -53,17 +54,15 @@ document.addEventListener('DOMContentLoaded', function(){
 				var w = event.data.polygon;
 				var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 				polygon.setAttribute("points", w.p);
-				polygon.setAttribute("fill", "green");
-				polygon.setAttribute("stroke", "red");
-				polygon.setAttribute("stroke-width", "1");
-				polygon.setAttribute("opacity", "0.3");
 				if(w.id=='polska')
 				{
+				polygon.setAttribute("stroke-width", 1);
 				polygon.id="polska";
 				w.t = "Polska";
 				}
 				else
 				{
+				polygon.setAttribute("stroke-width", 0.5);
 				polygon.id='w_'+w.id;
 				w.t = "województwo " + w.t;
 				}
@@ -73,9 +72,12 @@ document.addEventListener('DOMContentLoaded', function(){
 				polygont.appendChild(document.createTextNode(w.t));
 				
 				polygon.appendChild(polygont);
-
-				mapa.element.appendChild(polygon);
-
+				
+				if(w.id=='polska') var el = document.getElementById('pol').appendChild(polygon);
+				else var el = document.getElementById('woj').appendChild(polygon);
+				
+				mapa.grub[mapa.grub.length] = new Array(el,Number(el.getAttribute('stroke-width')));
+				
 				}
 		if(event.data.close) wojewodztwa.terminate();
 		
@@ -101,6 +103,7 @@ function restart()
 	if(mapa.tB.numberOfItems != 0) mapa.tB.clear();
 	mapa.tB.appendItem(t);
 	zoom = 1;
+	grubosc();
 	win.postMessage({mapa_zoom:zoom}, o);
 	}
 	
@@ -184,6 +187,7 @@ function przybliz(z,x,y)
 	
 	var t = mapa.tB.createSVGTransformFromMatrix(matrix);
 	mapa.tB.replaceItem(t,0);
+	grubosc();
 	win.postMessage({mapa_zoom:zoom}, o);
 
 	}
@@ -197,4 +201,15 @@ function punktZdarzenia(e)
 function info(x)
 	{
 	win.postMessage({info:x}, o);
+	}
+	
+function grubosc()
+	{
+	mapa.element.style.display = "none";
+	for(i=0;i<mapa.grub.length;i++)
+	{
+	mapa.grub[i][0].setAttribute('stroke-width',mapa.grub[i][1]/zoom);
+	}
+	
+	mapa.element.style.display = "block";
 	}

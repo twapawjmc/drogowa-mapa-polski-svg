@@ -45,6 +45,22 @@ width: 100%;
 z-index: -1000;
 }
 
+object#mapa p
+{
+position: absolute;
+background: red;
+color: white;
+z-index: 10000;
+left: 10%;
+right: 10%;
+top: 10%;
+bottom: 10%;
+text-align: center;
+vertical-align: bottom;
+font-size: 30pt;
+padding: 10px;
+}
+
 object#nawigacja
 {
 position: absolute;
