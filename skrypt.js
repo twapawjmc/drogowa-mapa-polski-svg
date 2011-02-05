@@ -8,11 +8,12 @@ var mm;
 var mn;
 var o = window.location.protocol +  '//' + window.location.host;
 var info;
+var x = new Array;
 
-
-window.addEventListener('message', function(e){
+addEvent(window, 'message', function(e){
 	//if(opera) opera.postError("Wiadomość od " + e.source.location);
 	//console.log(dump(e.data,10));
+	//console.log(e.data);
 	if(e.data.mapa_loaded==true)
 		{
 		mm = e.source
@@ -42,18 +43,36 @@ window.addEventListener('message', function(e){
 		info.style.backgroundColor=e.data.info.b;
 		}
 		
-}, false);
+});
 
-document.addEventListener('DOMContentLoaded', function(){
+addEvent(document,'DOMContentLoaded', function(){
 	doc_loaded = true;
 	load();
-}, false);
+	var easyv = document.getElementById('easyv')
+	
+addEvent(easyv, 'click', function(){
+		document.getElementById('mapa').setAttribute('data','mapa.svg.php');
+		var nav = document.getElementById('nawigacja');
+		nav.parentNode.removeChild(nav);
+		document.getElementById('info').parentNode.style.display = "none";
+		document.getElementById('lewaKolumna').style.display = "none";
+	});
+	
+});
 
 function load()
 	{
 	if(!svg_loaded || !doc_loaded || !nav_loaded) return;
 	info = document.getElementById('info');
-	info.parentElement.style.display='none';
+	info.parentNode.style.display='none';
 	svg_object = document.getElementById('mapa');
 	svg_doc = svg_object.contentDocument;
 	}
+	
+function addEvent(node, eventName, func)
+ {
+   if(node.addEventListener)
+     node.addEventListener(eventName, func, false);
+   else
+     node.attachEvent('on' + eventName, func);
+ }

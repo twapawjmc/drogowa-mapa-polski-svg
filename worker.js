@@ -1,7 +1,6 @@
 var w={};
 
 onmessage = function(event) {
-
 if(event.data.start)
 	{
 	postMessage({info:{d:true,t:"Ładowanie...",b:"rgba(200,200,200,0.6)"}});
@@ -13,7 +12,7 @@ if(event.data.start)
 		w = JSON.parse(woj);
 		var req = new XMLHttpRequest();
 		
-		req.open('GET', 'adm/wojewodztwa.php?v', false);
+		req.open('GET', 'ajax.php?granice&v', false);
 		req.onreadystatechange = function (aEvt)
 			{
 			if (req.readyState == 4)
@@ -39,7 +38,7 @@ if(event.data.start)
 		postMessage({info:{d:true,t:"Pobieranie...",b:"rgba(200,200,200,0.6)"}});
 		var req = new XMLHttpRequest();
 		
-		req.open('GET', 'adm/wojewodztwa.php', true);
+		req.open('GET', 'ajax.php?granice', true);
 		req.onreadystatechange = function (aEvt)
 			{
 			if (req.readyState == 4)
@@ -51,8 +50,7 @@ if(event.data.start)
 						postMessage({ls:req.responseText});
 						start();
 					}
-					else
-					postMessage({info:{d:true,t:"Błąd podczas ładowania strony.",b:"red"}});
+					else postMessage({info:{d:true,t:"Błąd podczas ładowania strony.",b:"red"}});
 				}
 			};
 		req.send(null); 

@@ -1,13 +1,6 @@
 <?php
-header('Content-type: application/json;charset=utf-8'); 
 $v = array('v'=>'0.1');
-if(isset($_GET['v'])) 
-	{
-	echo json_encode($v); exit ;
-	}
-else
-	{
-	$wojewodztwa = array(
+$wojewodztwa = array(
 	'zp'=>'zachodniopomorskie',
 	'wp'=>'wielkopolskie',
 	'wm'=>'warmińsko-mazurskie',
@@ -24,16 +17,42 @@ else
 	'lb'=>'lubelskie',
 	'kp'=>'kujawsko-pomorskie',
 	'ds'=>'dolnośląskie'
-	
 	);
-	include 'granice.php';
-	$g = array('granice'=>&$granice,'wojewodztwa'=>&$wojewodztwa);
-	$g = array_merge($g,$v);
+include 'granice.php';
+
+function pol($sw)
+	{
+	$polska = array();
+	global $granice;
+	foreach($granice as $g)
+		foreach($g['id'] as $id)
+			{
+			if($id=="polska") $polska[]=$g['wsp'];
+			}
+			
+	echo '<polygon id="polska" stroke-width="'.$sw.'" points="'.implode(' ',stworzWielokat(&$polska)).'">';
+	echo '<title>Polska</title>';
+	echo '</polygon>';
 	}
-
-
-
-
-
-echo json_encode($g); exit ;
+	
+function woj($sw)
+	{
+	$w = array();
+	global $granice;
+	global $wojewodztwa;
+	foreach($granice as $g)
+		foreach($g['id'] as $id)
+			{
+			$w[$id][]=$g['wsp'];
+			}
+	
+	foreach($w as $wid => $ww)
+		{ 
+		if($wid == "polska") continue;
+		echo '<polygon id="w_'.$wid.'" stroke-width="'.$sw.'" points="'.implode(' ',stworzWielokat(&$ww)).'">';
+		echo '<title>województwo '.$wojewodztwa[$wid].'</title>';
+		echo '</polygon>';
+		}
+	
+	}
 ?>
